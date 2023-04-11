@@ -5,7 +5,7 @@
         v-show="cardsViewed === ci"
     >
       <h3>{{ card.word }}</h3>
-      <p>{{ card.definition }}</p>
+      <p v-if="card.definition">{{ card.definition }}</p>
     </div>
 </template>
 <script>

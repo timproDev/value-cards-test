@@ -1,8 +1,9 @@
 <template>
     <div class="controls">
-      <button type="button" class="remove" @click.prevent=removeCard>remove</button>
-      <button type="button" class="add" @click.prevent=selectCard>keep</button>
-      <button type="button" class="pass" @click.prevent=passCard>pass</button>
+      <button type="button" class="remove" @click.prevent=isNotImportant>Not important</button>
+      <button type="button" class="add" @click.prevent=isImportant>Important</button>
+      <button type="button" class="add" @click.prevent=isVeryImportant>Very important</button>
+      <button type="button" class="pass" @click.prevent=passCard>Come back to</button>
     </div>
 </template>
 <script>
@@ -11,13 +12,21 @@ export default {
         "cards"
     ],
     emit: [
-        "card-selected",
         "card-removed",
+        "is-not-important",
+        "is-important",
+        "is-very-important",
         "card-passed"
     ],
     methods: {
-        selectCard() {
-            this.$emit('card-selected');
+        isNotImportant() {
+            this.$emit('is-not-important')
+        },
+        isImportant() {
+            this.$emit('is-important')
+        },
+        isVeryImportant() {
+            this.$emit('is-very-important')
         },
         removeCard() {
             this.$emit('card-removed');
