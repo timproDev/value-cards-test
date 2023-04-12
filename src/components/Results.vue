@@ -1,15 +1,16 @@
 <template>
     <div class="results">
-        <h5 v-for="c in secondDeck">{{ c.word }}</h5>
+        <p>The values you have chosen are:</p>
+        <h3 v-for="c in importantDeck">{{ c.word }}</h3>
     </div>
 </template>
 <script>
 export default {
-    props: ["secondDeck"]
+    props: ["importantDeck"]
 }
 </script>
 <style scoped>
     * {
-        color: salmon;
+        color: #fff;
     }
 </style>
