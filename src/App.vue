@@ -29,11 +29,10 @@
       :cardsViewed="cardsViewed" />
 
     <Results
-      v-else :importantDeck="importantDeck" />
+      v-if="cardsViewed == cards.length" :cards="cards" />
 
     <Controls
-      :cards="cards"
-      :cardsViewed="cardsViewed"
+      :play="play"
       :stage="stage"
       @is-not-important="cardRemoved"
       @is-important="isImportant"
@@ -53,31 +52,30 @@ export default {
     Cards,
     Controls,
     Results
-  },
-  watch: {
-    // watch the number of cards view and increment stage value
-    // cardsViewed(val) {
-    //   if (val == cards.length) {
-    //     stage++;
-    //   }
-    // }
-  },
+  },  
+  watch: { // watch data for changes
+    cardsViewed(val) {
+      if (val == this.cards.length) {
+        this.play = false;
+      }
+    }
+  },  
   methods: {
     resetDeck() {
       this.cardsViewed = 0;
       this.cards.forEach((i) => {
-        i.removed = false;        
+        i.important = false;        
       })
     },
     isImportant() {
-      this.importantDeck.push(this.cards[this.cardsViewed]);
+      // this.importantDeck.push(this.cards[this.cardsViewed]); // approach to add to new deck
+      this.cards[this.cardsViewed].important = true;
       this.cardsViewed++;
     },
     cardPassed() {
       this.cards.push(this.cards.splice(this.cards.indexOf(this.cards[this.cardsViewed]), 1)[0]);
     },
     cardRemoved() {
-      this.cards[this.cardsViewed].removed = true; // may not need this property
       this.cardsViewed++;
     },
     goToNext() {
@@ -86,69 +84,29 @@ export default {
   },
   data() {
     return {
-      cardsViewed: 0, // keep track of cards,
-      stage:1,
-      importantDeck: [],
+      cardsViewed: 0, // keep track of cards
+      play: true,
+      stage: 1,
       cards: [
         {
           word: 'Accountability',
-          removed: false
+          important: false
         },
         {
           word: 'Achievement',
-          removed: false
+          important: false
         },
         {
           word: 'Teamwork',
-          removed: false
+          important: false
         },
         {
           word: 'Thrift',
-          removed: false
+          important: false
         },
         {
           word: 'Time',
-          removed: false
-        },
-        {
-          word: 'Truth',
-          removed: false
-        },
-        {
-          word: 'Understanding',
-          removed: false
-        },
-        {
-          word: 'Uniqueness',
-          removed: false
-        },
-        {
-          word: 'Usefulness',
-          removed: false
-        },
-        {
-          word: 'Vision',
-          removed: false
-        },
-        {
-          word: 'Vulnerability',
-          removed: false
-        },
-        {
-          word: 'Wealth',
-          removed: false
-        },
-        {
-          word: 'Well-being',
-          removed: false
-        },
-        {
-          word: 'Wholeheartedness',
-          removed: false
-        },
-        {
-          word: 'Wisdom',
-          removed: false
+          important: false
         }
       ]
     }    

@@ -1,17 +1,14 @@
 <template>
-    <div class="stage-1-buttons controls" v-if="stage == 1">
+    <div class="controls" v-show="play == true">
         <button type="button" class="remove" @click.prevent=isNotImportant>Not important</button>
         <button type="button" class="add" @click.prevent=isImportant>Important</button>
         <button type="button" class="pass" @click.prevent=passCard>Come back to</button>
-    </div>
-    <div class="stage-1-buttons controls" v-else-if="stage == 2">
-        <span>Stage 2 buttons</span>
     </div>
 </template>
 <script>
 export default {
     props: [
-        "cards",
+        "play",
         "stage"
     ],
     emit: [
