@@ -1,21 +1,16 @@
 <template>
   <div class="main">
-
-    <p
-      :class="cardsViewed < cards.length ? `show-this` : `hide-this`"
-      class="number"
-      :cards="cards"
-      :cardsViewed="cardsViewed"
-    >{{ (cards.length - cardsViewed) }} cards remaining</p>
     
-    <button
-      type="button"
-      class="next-btn"
-      v-if="cardsViewed == cards.length"
+    <CardCounter
       :cards="cards"
       :cardsViewed="cardsViewed"
-      @click.prevent="goToNext"
-    >Go to next stage</button>
+    />    
+    
+    <NextButton
+        :cards="cards"
+        :cardsViewed="cardsViewed"
+        @go-to-next="goToNext"
+      />    
 
     <Cards
       v-if="cardsViewed < cards.length"
@@ -30,27 +25,31 @@
       @is-not-important="isNotImportant"
       @is-important="isImportant"
       @card-passed="cardPassed"
-      />
+      />      
 
       <button
         type="button" 
         class="btn btn--reset"
         @click.prevent="resetDeck"
       >reset</button>
-
+      
   </div>
 </template>
 <script>
 import Cards from './components/Cards.vue';
 import Controls from './components/Controls.vue';
 import Results from './components/Results.vue'
+import CardCounter from './components/CardCounter.vue'
+import NextButton from './components/NextButton.vue'
 
 export default {
   name: 'App',
   components: {
     Cards,
+    NextButton,
     Controls,
-    Results
+    Results,
+    CardCounter
   },  
   watch: { // watch data for changes
     cardsViewed(val) {
@@ -64,9 +63,6 @@ export default {
       this.cardsViewed = 0;
       this.stage = 1;
       this.play = true;
-      // this.cards.forEach((i) => {
-      //   i.important = true;
-      // })
     },
     isImportant() {
       this.importantDeck.push(this.cards[this.cardsViewed]); // approach to add to new deck
@@ -148,7 +144,10 @@ button, .btn {
     outline: none;
     height: 120px;
     cursor: pointer;
-    border-radius: 4px;
+    border-radius: 160px;
+    width: 80px;
+    height: 80px;
+
     &:hover {
         background-color: #fff;
     }
