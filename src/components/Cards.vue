@@ -16,14 +16,3 @@ export default {
     ]
 }
 </script>
-<style scoped>
-    .card {
-        border-radius: 8px;
-        color: #fff;
-        border: 1px solid #fff;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 400px;
-    }
-</style>

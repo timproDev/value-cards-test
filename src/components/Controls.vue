@@ -1,5 +1,5 @@
 <template>
-    <div class="controls" v-show="play == true">
+    <div class="controls">
         <button type="button" class="remove" @click.prevent=isNotImportant>Not important</button>
         <button type="button" class="add" @click.prevent=isImportant>Important</button>
         <button type="button" class="pass" @click.prevent=passCard>Come back to</button>

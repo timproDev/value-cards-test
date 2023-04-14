@@ -1,12 +1,6 @@
 <template>
   <div class="main">
-    
-    <button
-      type="button" 
-      class="reset"
-      @click.prevent="resetDeck"
-    >reset</button>
-    
+
     <p
       :class="cardsViewed < cards.length ? `show-this` : `hide-this`"
       class="number"
@@ -29,15 +23,20 @@
       :cardsViewed="cardsViewed" />
 
     <Results
-      v-if="cardsViewed == cards.length" :cards="cards" />
+      v-if="cardsViewed == cards.length" :importantDeck="importantDeck" />
 
     <Controls
-      :play="play"
-      :stage="stage"
-      @is-not-important="cardRemoved"
+      v-show="play == true"
+      @is-not-important="isNotImportant"
       @is-important="isImportant"
       @card-passed="cardPassed"
       />
+
+      <button
+        type="button" 
+        class="btn btn--reset"
+        @click.prevent="resetDeck"
+      >reset</button>
 
   </div>
 </template>
@@ -63,23 +62,25 @@ export default {
   methods: {
     resetDeck() {
       this.cardsViewed = 0;
-      this.cards.forEach((i) => {
-        i.important = false;        
-      })
+      this.stage = 1;
+      this.play = true;
+      // this.cards.forEach((i) => {
+      //   i.important = true;
+      // })
     },
     isImportant() {
-      // this.importantDeck.push(this.cards[this.cardsViewed]); // approach to add to new deck
-      this.cards[this.cardsViewed].important = true;
+      this.importantDeck.push(this.cards[this.cardsViewed]); // approach to add to new deck
+      this.cardsViewed++;
+    },
+    isNotImportant() {
       this.cardsViewed++;
     },
     cardPassed() {
       this.cards.push(this.cards.splice(this.cards.indexOf(this.cards[this.cardsViewed]), 1)[0]);
     },
-    cardRemoved() {
-      this.cardsViewed++;
-    },
     goToNext() {
       this.stage++;
+      this.play = true;
     }
   },
   data() {
@@ -87,26 +88,27 @@ export default {
       cardsViewed: 0, // keep track of cards
       play: true,
       stage: 1,
+      importantDeck: [],
       cards: [
         {
           word: 'Accountability',
-          important: false
+          important: true
         },
         {
           word: 'Achievement',
-          important: false
+          important: true
         },
         {
           word: 'Teamwork',
-          important: false
+          important: true
         },
         {
           word: 'Thrift',
-          important: false
+          important: true
         },
         {
           word: 'Time',
-          important: false
+          important: true
         }
       ]
     }    
@@ -115,10 +117,11 @@ export default {
 </script>
 <style lang="scss">
 body {
-  background-color: rgb(45, 45, 45);
+  font-family: 'Nunito', sans-serif;
+  background-color: rgb(112, 112, 112);
 }
 .main {
-  width: 500px;
+  width: 400px;
   margin: 0 auto;
 }
 p.number {
@@ -127,23 +130,67 @@ p.number {
 .controls {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
-    row-gap: 32px;
-    padding-top: 32px;
+    column-gap: 8px;
+    padding-top: 24px;
+    justify-content: center;    
 }
-button {
-    background-color: grey;
-    border: 1px solid black;
+button, .btn {
+  position: relative;
+  display: inline-flex;
+  text-decoration: none;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  transition: all 100ms linear;
+  //
+    background-color: aqua;
+    border: none;
     outline: none;
-    width: 60px;
-    height: 60px;
+    height: 120px;
     cursor: pointer;
+    border-radius: 4px;
     &:hover {
-        background-color: #fff
+        background-color: #fff;
+    }
+    &--reset {
+      background-color: #202020;
+      border: none;
+      color: white;
+      text-decoration: underline;
+      display: inline;
+      height: auto;
+      text-align: center;
+      width: 100%;
+      margin-top: 24px;
+      padding: 1rem;
+      &:hover {
+        color: #000;
+      }
     }
 }
 .hide-this {
   visibility: hidden;
   opacity: 0;
 }
+
+.card {
+        border-radius: 8px;
+        background-color: #262e35;
+        color: #fff;
+        border: 1px solid #181b1d;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 600px;
+        justify-content: center;
+        align-content: center;
+        box-shadow:
+            0px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+            0px 6.7px 5.3px rgba(0, 0, 0, 0.028),
+            0px 12.5px 10px rgba(0, 0, 0, 0.035),
+            0px 22.3px 17.9px rgba(0, 0, 0, 0.042),
+            0px 41.8px 33.4px rgba(0, 0, 0, 0.05),
+            0px 100px 80px rgba(0, 0, 0, 0.07)
+            ;
+    }
 </style>
