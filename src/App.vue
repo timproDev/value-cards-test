@@ -1,38 +1,19 @@
 <template>
   <div class="main">
-    
-    <CardCounter
-      :cards="cards"
-      :cardsViewed="cardsViewed"
-    />    
-    
-    <NextButton
-        :cards="cards"
-        :cardsViewed="cardsViewed"
-        @go-to-next="goToNext"
-      />    
 
-    <Cards
-      v-if="cardsViewed < cards.length"
-      :cards="cards"
-      :cardsViewed="cardsViewed" />
+    <ButtonReset @reset-deck="resetDeck" />
 
-    <Results
-      v-if="cardsViewed == cards.length" :importantDeck="importantDeck" />
+    <CardCounter :cards="cards" :cardsViewed="cardsViewed" />
 
-    <Controls
-      v-show="play == true"
-      @is-not-important="isNotImportant"
-      @is-important="isImportant"
-      @card-passed="cardPassed"
-      />      
+    <ButtonNext :cards="cards" :cardsViewed="cardsViewed" @go-to-next="goToNext" />
 
-      <button
-        type="button" 
-        class="btn btn--reset"
-        @click.prevent="resetDeck"
-      >reset</button>
-      
+    <Cards v-if="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" />
+
+    <Results v-if="cardsViewed == cards.length" :importantDeck="importantDeck" />
+
+    <Controls v-show="play == true" @is-not-important="isNotImportant" @is-important="isImportant"
+      @card-passed="cardPassed" />
+
   </div>
 </template>
 <script>
@@ -40,24 +21,26 @@ import Cards from './components/Cards.vue';
 import Controls from './components/Controls.vue';
 import Results from './components/Results.vue'
 import CardCounter from './components/CardCounter.vue'
-import NextButton from './components/NextButton.vue'
+import ButtonNext from './components/ButtonNext.vue'
+import ButtonReset from './components/ButtonReset.vue'
 
 export default {
   name: 'App',
   components: {
     Cards,
-    NextButton,
+    ButtonNext,
+    ButtonReset,
     Controls,
     Results,
     CardCounter
-  },  
+  },
   watch: { // watch data for changes
     cardsViewed(val) {
       if (val == this.cards.length) {
         this.play = false;
       }
     }
-  },  
+  },
   methods: {
     resetDeck() {
       this.cardsViewed = 0;
@@ -107,89 +90,89 @@ export default {
           important: true
         }
       ]
-    }    
+    }
   }
 }
 </script>
 <style lang="scss">
 body {
   font-family: 'Nunito', sans-serif;
-  background-color: rgb(112, 112, 112);
+  background-color: #D6D6D6;
 }
+
 .main {
   width: 400px;
   margin: 0 auto;
 }
-p.number {
-  color:aqua;
+.number {
+  text-align: center;
 }
 .controls {
-    display: flex;
-    flex-direction: row;
-    column-gap: 8px;
-    padding-top: 24px;
-    justify-content: center;    
+  display: flex;
+  flex-direction: row;
+  column-gap: 16px;
+  padding: 24px;
+  justify-content: center;
+  margin-top: 3rem;
 }
-button, .btn {
+
+button,
+.btn {
   position: relative;
   display: inline-flex;
   text-decoration: none;
-  flex-grow: 1;
+  font-weight: bold;
   align-items: center;
   justify-content: center;
-  transition: all 100ms linear;
   //
-    background-color: aqua;
-    border: none;
-    outline: none;
-    height: 120px;
-    cursor: pointer;
-    border-radius: 160px;
-    width: 80px;
-    height: 80px;
+  background-color: #fff;
+  border: none;
+  outline: none;
+  height: 120px;
+  cursor: pointer;
+  border-radius: 160px;
+  width: 80px;
+  height: 80px;
+  transition: all 120ms linear;
 
-    &:hover {
-        background-color: #fff;
-    }
-    &--reset {
-      background-color: #202020;
-      border: none;
-      color: white;
-      text-decoration: underline;
-      display: inline;
-      height: auto;
-      text-align: center;
-      width: 100%;
-      margin-top: 24px;
-      padding: 1rem;
-      &:hover {
-        color: #000;
-      }
-    }
+  &:hover {
+    background-color: aqua;
+  }
 }
+
+.btn--reset {
+  width: auto;
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+  display: inline;
+  height: auto;
+  padding: 1rem 0;
+}
+
 .hide-this {
   visibility: hidden;
   opacity: 0;
 }
 
 .card {
-        border-radius: 8px;
-        background-color: #262e35;
-        color: #fff;
-        border: 1px solid #181b1d;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 600px;
-        justify-content: center;
-        align-content: center;
-        box-shadow:
-            0px 2.8px 2.2px rgba(0, 0, 0, 0.02),
-            0px 6.7px 5.3px rgba(0, 0, 0, 0.028),
-            0px 12.5px 10px rgba(0, 0, 0, 0.035),
-            0px 22.3px 17.9px rgba(0, 0, 0, 0.042),
-            0px 41.8px 33.4px rgba(0, 0, 0, 0.05),
-            0px 100px 80px rgba(0, 0, 0, 0.07)
-            ;
-    }
+  border-radius: 8px;
+  background-color: #F4F4F4;
+  color: #454545;
+  border: 16px solid #FCFCFC;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 210px;
+  justify-content: center;
+  align-content: center;
+  box-shadow:
+    0px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    0px 6.7px 5.3px rgba(0, 0, 0, 0.028),
+    0px 12.5px 10px rgba(0, 0, 0, 0.035);
+
+  h3 {
+    font-size: 36px;
+  }
+}
 </style>
