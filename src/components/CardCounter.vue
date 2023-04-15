@@ -2,7 +2,7 @@
     <p
     :class="cardsViewed < cards.length ? `show-this` : `hide-this`"
     class="number"
-    >{{ (cards.length - cardsViewed) }} cards remaining</p>
+    ><span>{{ (cards.length - cardsViewed) }}</span> cards remaining</p>
 </template>
 <script>
 export default {

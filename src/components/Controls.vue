@@ -7,10 +7,6 @@
 </template>
 <script>
 export default {
-    props: [
-        "play",
-        "stage"
-    ],
     emit: [
         "is-not-important",
         "is-important",

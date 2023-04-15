@@ -1,73 +1,26 @@
 <template>
   <div class="main">
+    <div class="header">
+      <h1>Value Cards</h1>
+      <p>The Common Core Values Exercise</p>
+    </div>    
 
-    <ButtonReset @reset-deck="resetDeck" />
-
-    <CardCounter :cards="cards" :cardsViewed="cardsViewed" />
-
-    <ButtonNext :cards="cards" :cardsViewed="cardsViewed" @go-to-next="goToNext" />
-
-    <Cards v-if="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" />
-
-    <Results v-if="cardsViewed == cards.length" :importantDeck="importantDeck" />
-
-    <Controls v-show="play == true" @is-not-important="isNotImportant" @is-important="isImportant"
-      @card-passed="cardPassed" />
+    <RoundOne
+      :cards="cards"
+    />
 
   </div>
 </template>
 <script>
-import Cards from './components/Cards.vue';
-import Controls from './components/Controls.vue';
-import Results from './components/Results.vue'
-import CardCounter from './components/CardCounter.vue'
-import ButtonNext from './components/ButtonNext.vue'
-import ButtonReset from './components/ButtonReset.vue'
+import RoundOne from './views/RoundOne.vue';
 
 export default {
   name: 'App',
   components: {
-    Cards,
-    ButtonNext,
-    ButtonReset,
-    Controls,
-    Results,
-    CardCounter
-  },
-  watch: { // watch data for changes
-    cardsViewed(val) {
-      if (val == this.cards.length) {
-        this.play = false;
-      }
-    }
-  },
-  methods: {
-    resetDeck() {
-      this.cardsViewed = 0;
-      this.stage = 1;
-      this.play = true;
-    },
-    isImportant() {
-      this.importantDeck.push(this.cards[this.cardsViewed]); // approach to add to new deck
-      this.cardsViewed++;
-    },
-    isNotImportant() {
-      this.cardsViewed++;
-    },
-    cardPassed() {
-      this.cards.push(this.cards.splice(this.cards.indexOf(this.cards[this.cardsViewed]), 1)[0]);
-    },
-    goToNext() {
-      this.stage++;
-      this.play = true;
-    }
+    RoundOne
   },
   data() {
     return {
-      cardsViewed: 0, // keep track of cards
-      play: true,
-      stage: 1,
-      importantDeck: [],
       cards: [
         {
           word: 'Accountability',
@@ -104,8 +57,35 @@ body {
   width: 400px;
   margin: 0 auto;
 }
+.header {
+  h1, p {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+}
+
+.title {
+  h2 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+  }
+}
+
 .number {
+  padding-top: 2rem;
   text-align: center;
+  line-height: 26px;
+  span {
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 100px;
+    width: 24px;
+    height: 24px;
+    color: red;
+    font-weight: bold;
+  }
 }
 .controls {
   display: flex;
@@ -113,7 +93,7 @@ body {
   column-gap: 16px;
   padding: 24px;
   justify-content: center;
-  margin-top: 3rem;
+  margin-top: 2rem;
 }
 
 button,
@@ -133,10 +113,11 @@ button,
   border-radius: 160px;
   width: 80px;
   height: 80px;
-  transition: all 120ms linear;
+  transition: all 60ms linear;
 
   &:hover {
-    background-color: aqua;
+    background-color: #333333;
+    color: #fff;
   }
 }
 
@@ -150,7 +131,7 @@ button,
   padding: 1rem 0;
 }
 
-.hide-this {
+.hide-this, .hidden {
   visibility: hidden;
   opacity: 0;
 }
@@ -173,6 +154,18 @@ button,
 
   h3 {
     font-size: 36px;
+  }
+  &--deck-starter {
+    cursor: pointer;
+    h3 {
+      font-size: 1rem;
+      color: salmon;
+      font-weight: bold;
+    }
+    &:hover {
+      background-color:#ececec;
+    }
+
   }
 }
 </style>
