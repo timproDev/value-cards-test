@@ -5,44 +5,48 @@
       <p>The Common Core Values Exercise</p>
     </div>    
 
-    <RoundOne
-      :cards="cards"
+    <RoundOne v-if="round == 1"
+      :cards="cards" :roundOneImportant="roundOneImportant" :round="round"
+    />
+
+    <RoundOne v-else-if="round == 2"
+      :roundOneImportant="roundOneImportant" :roundTwoImportant="roundTwoImportant"
     />
 
   </div>
 </template>
 <script>
 import RoundOne from './views/RoundOne.vue';
+import RoundTwo from './views/RoundTwo.vue'
 
 export default {
   name: 'App',
   components: {
-    RoundOne
+    RoundOne,
+    RoundTwo
   },
   data() {
     return {
+      round: 1,
       cards: [
         {
-          word: 'Accountability',
-          important: true
+          word: 'Accountability'
         },
         {
-          word: 'Achievement',
-          important: true
+          word: 'Achievement'
         },
         {
-          word: 'Teamwork',
-          important: true
+          word: 'Teamwork'
         },
         {
-          word: 'Thrift',
-          important: true
+          word: 'Thrift'
         },
         {
-          word: 'Time',
-          important: true
+          word: 'Time'
         }
-      ]
+      ],
+      roundOneImportant: [],
+      roundTwoImportant: []
     }
   }
 }

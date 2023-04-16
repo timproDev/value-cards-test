@@ -4,18 +4,16 @@
       <ButtonReset @reset-deck="resetDeck" :class="{hidden: !deckStarted}" />
         
       <div class="title">
-        <h2>Round One</h2>
+        <h2>Round Two</h2>
       </div>      
 
-      <CardCounter :cards="cards" :cardsViewed="cardsViewed" :class="{hidden: !deckStarted}" />
+      <CardCounter :roundOneImportant="roundOneImportant" :cardsViewed="cardsViewed" :class="{hidden: !deckStarted}" />
   
-      <Cards v-if="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
-      
-      <Results v-if="cardsViewed == cards.length" :roundOneImportant="roundOneImportant" />
+      <Cards v-if="cardsViewed < roundOneImportant.length" :roundOneImportant="roundOneImportant" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
       
       <Controls @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" :class="{hidden: !deckStarted}" />
       
-      <ButtonNext :cards="cards" :cardsViewed="cardsViewed" @go-to-next="goToNext" />
+      <ButtonNext :roundOneImportant="roundOneImportant" :cardsViewed="cardsViewed" @go-to-next="goToNext" />
 
     </div>
   </template>
@@ -29,9 +27,8 @@
   
   export default {
     props: [
-        "cards",
         "roundOneImportant",
-        "round"
+        "roundTwoImportant"
     ],
     data() {
         return {
@@ -63,19 +60,17 @@
         this.cardsViewed = 0;
       },
       isImportant() {
-        this.roundOneImportant.push(this.cards[this.cardsViewed]); // approach to add to new deck
+        this.roundTwoImportant.push(this.roundOneImportant[this.cardsViewed]); // approach to add to new deck
         this.cardsViewed++;
-        console.log('round one', this.roundOneImportant)
       },
       isNotImportant() {
         this.cardsViewed++;
       },
       cardPassed() {
-        this.cards.push(this.cards.splice(this.cards.indexOf(this.cards[this.cardsViewed]), 1)[0]);
-        console.log('passed', this.cards) // QUESTION: why does this not need an $emit?
+        this.roundOneImportant.push(this.roundOneImportant.splice(this.roundOneImportant.indexOf(this.roundOneImportant[this.cardsViewed]), 1)[0]);
       },
       goToNext() {
-        this.round = 2;
+        this.round = 3;
       }
     }
   }
