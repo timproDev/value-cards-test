@@ -6,8 +6,10 @@
       </div>      
 
       <CardCounter :cards="cards" :cardsViewed="cardsViewed" :class="{hidden: !deckStarted}" />
+      
       <Cards v-if="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
-      <Controls @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" :class="{hidden: !deckStarted}" />
+      
+      <Controls :roundIt="roundIt" @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" :class="{hidden: !deckStarted}" />
 
     </div>
   </template>
@@ -22,7 +24,8 @@
       CardCounter
     },
     props: [
-        "cards"
+        "cards",
+        "roundIt"
     ],
     emits: [
       'push-to-round-three'

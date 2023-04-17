@@ -5,11 +5,11 @@
       <p>The Common Core Values Exercise</p>
     </div>
 
-    <RoundOne v-if="roundIt == 1" :cards="cards" @round-finished="roundUp" @push-to-round-one="pushOne" />
+    <RoundOne v-if="roundIt == 1" :roundIt="roundIt" :cards="cards" @round-finished="roundUp" @push-to-round-one="pushOne" />
 
-    <RoundTwo v-else-if="roundIt == 2" :cards="roundOneImportant" @round-finished="roundUp" @push-to-round-two="pushTwo" />
+    <RoundTwo v-else-if="roundIt == 2" :roundIt="roundIt" :cards="roundOneImportant" @round-finished="roundUp" @push-to-round-two="pushTwo" />
 
-    <RoundThree v-else-if="roundIt == 3" :cards="roundTwoImportant" @round-finished="roundUp" @push-to-round-three="pushThree" />
+    <RoundThree v-else-if="roundIt == 3" :roundIt="roundIt" :cards="roundTwoImportant" @round-finished="roundUp" @push-to-round-three="pushThree" />
 
   </div>
 </template>
