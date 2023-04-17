@@ -13,6 +13,8 @@
 
       <ButtonNext :cards="cards" :cardsViewed="cardsViewed" @go-to-next="goToNext">See your values!</ButtonNext>
 
+      <p>When you see each card, tap the buttons to tell us whether the each value is modertaley important or somewhat important.<br>Reminder: You’ll have 6 seconds for each card before the card is passed to be revisited.</p>
+      
     </div>
   </template>
   <script>

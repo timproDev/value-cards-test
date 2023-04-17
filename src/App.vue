@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <div class="header">
+    <div class="cnt-block cnt-block--home-header">
       <h1>Value Cards</h1>
       <p>The Common Core Values Exercise</p>
     </div>
@@ -66,22 +66,6 @@ export default {
         { word: 'Action' },
         { word: 'Excellence' },
         { word: 'Inspiration' },
-        { word: 'Beauty' },
-        { word: 'Peace' },
-        { word: 'Control' },
-        { word: 'Challenge' },
-        { word: 'Belief' },
-        { word: 'Nurture' },
-        { word: 'Hope' },
-        { word: 'Gratitude' },
-        { word: 'Self-Expression' },
-        { word: 'Sacredness' },
-        { word: 'Calm' },
-        { word: 'Change' },
-        { word: 'Learning' },
-        { word: 'Accomplishment' },
-        { word: 'Nature' },
-        { word: 'Community' },
         { word: 'Fairness' },
         { word: 'Partnership' },
         { word: 'Faithfulness' },
@@ -99,16 +83,43 @@ export default {
 }
 </script>
 <style lang="scss">
+:root {
+  --color-primary: rgb(0, 37, 202);
+}
 body {
-  font-family: 'Nunito', sans-serif;
-  background-color: #D6D6D6;
+  font-family: 'Questrial', sans-serif;
+  background-color: #363636;
 }
 
 .main {
   width: 400px;
   margin: 0 auto;
+  padding: 2rem;
+  background-color: #D6D6D6;
+  border-radius: 2px;
 }
 
+.cnt-block {
+  $this: &;
+
+  h1,h2,h3,h4,h5,h6 {
+    margin: 0;
+    padding: 0;
+  }
+  p, li, li p, span {
+    margin: 0;
+    padding: 0;
+  }
+  &--home-hero {
+    text-align: center;
+    padding: 2rem;    
+  }
+  &--home-header {
+    text-align: center;
+    padding: 2rem;
+    border-bottom: 1px dashed #adadad;
+  }
+}
 .header {
 
   h1,
@@ -122,34 +133,40 @@ body {
 .title {
   h2 {
     margin: 0;
-    padding: 0;
+    padding: 1rem 0;
     text-align: center;
   }
 }
 
 .number {
-  padding-top: 2rem;
+  padding-top: 0;
   text-align: center;
   line-height: 26px;
-
+  color:#616161;
+  
   span {
     display: inline-block;
     background-color: #fff;
     border-radius: 100px;
     width: 24px;
     height: 24px;
-    color: red;
+    color: var(--color-primary);
     font-weight: bold;
   }
 }
 
+.controls-wrapper {
+    padding: 2rem 0;
+    text-align: center;
+    border-bottom: 1px dashed #adadad;
+}
 .controls {
   display: flex;
   flex-direction: row;
   column-gap: 16px;
-  padding: 24px;
+  padding: 0;
   justify-content: center;
-  margin-top: 2rem;
+  margin: 1rem;
 }
 
 button,
@@ -176,7 +193,9 @@ button,
     color: #fff;
   }
 }
-
+.btn--start {
+  margin-top: 3rem;
+}
 .btn--reset {
   width: auto;
   background-color: transparent;

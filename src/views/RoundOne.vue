@@ -14,6 +14,8 @@
       <Controls :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" :class="{hidden: !deckStarted}" />
       
       <ButtonNext :cards="cards" :cardsViewed="cardsViewed" @go-to-next="goToNext">Begin round 2</ButtonNext>
+      
+      <p>When you see each card, tap the buttons to tell us whether the each value is important, or not important.<br>Reminder: You’ll have 6 seconds for each card before the card is passed to be revisited. Don’t think too hard about this, go with your gut.</p>
 
     </div>
   </template>

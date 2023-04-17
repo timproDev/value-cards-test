@@ -1,5 +1,5 @@
 <template>
-    <div class="controls-wraper">
+    <div class="controls-wrapper">
         <h4>How important?</h4>
         <div class="controls" v-if="deckRound == 1">
             <button type="button" class="remove" @click.prevent=isNotImportant>Not important</button>
