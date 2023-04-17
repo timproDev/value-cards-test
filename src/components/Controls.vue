@@ -7,7 +7,7 @@
 </template>
 <script>
 export default {
-    emit: [
+    emits: [
         "is-not-important",
         "is-important",
         "card-passed"

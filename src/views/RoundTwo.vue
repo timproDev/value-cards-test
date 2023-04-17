@@ -1,48 +1,42 @@
 <template>
-    <div class="roundone">
-  
-      <ButtonReset @reset-deck="resetDeck" :class="{hidden: !deckStarted}" />
+    <div class="roundtwo">
         
       <div class="title">
         <h2>Round Two</h2>
       </div>      
 
-      <CardCounter :roundOneImportant="roundOneImportant" :cardsViewed="cardsViewed" :class="{hidden: !deckStarted}" />
-  
-      <Cards v-if="cardsViewed < roundOneImportant.length" :roundOneImportant="roundOneImportant" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
-      
+      <CardCounter :cards="cards" :cardsViewed="cardsViewed" :class="{hidden: !deckStarted}" />
+      <Cards v-if="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
       <Controls @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" :class="{hidden: !deckStarted}" />
-      
-      <ButtonNext :roundOneImportant="roundOneImportant" :cardsViewed="cardsViewed" @go-to-next="goToNext" />
+      <ButtonNext :cards="cards" :cardsViewed="cardsViewed" @go-to-next="goToNext" />
 
     </div>
   </template>
   <script>
-  import Cards from '../components/Cards.vue';
-  import Controls from '../components/Controls.vue';
-  import Results from '../components/Results.vue'
+  import Cards from '../components/Cards.vue'
+  import Controls from '../components/Controls.vue'
   import CardCounter from '../components/CardCounter.vue'
   import ButtonNext from '../components/ButtonNext.vue'
-  import ButtonReset from '../components/ButtonReset.vue'
-  
+
   export default {
+    components: {
+      Cards,
+      Controls,
+      CardCounter,
+      ButtonNext
+    },
     props: [
-        "roundOneImportant",
-        "roundTwoImportant"
+        "cards"
+    ],
+    emits: [
+      'push-to-round-two',
+      'round-finished'
     ],
     data() {
         return {
             cardsViewed: 0, // keep track of cards,
             deckStarted: false
         }
-    },
-    components: {
-      Cards,
-      ButtonNext,
-      ButtonReset,
-      Controls,
-      Results,
-      CardCounter
     },
     watch: { // watch data for changes
       cardsViewed(val) {
@@ -52,25 +46,26 @@
       }
     },
     methods: {
-        startDeck() {
-            this.deckStarted = true;
-        },
+      startDeck() {
+          this.deckStarted = true;
+      },
       resetDeck() {
         this.deckStarted = false
         this.cardsViewed = 0;
       },
       isImportant() {
-        this.roundTwoImportant.push(this.roundOneImportant[this.cardsViewed]); // approach to add to new deck
+        this.$emit('push-to-round-two',this.cards[this.cardsViewed]);
+        console.log('push-to-round-two',this.cards[this.cardsViewed])
         this.cardsViewed++;
       },
       isNotImportant() {
         this.cardsViewed++;
       },
       cardPassed() {
-        this.roundOneImportant.push(this.roundOneImportant.splice(this.roundOneImportant.indexOf(this.roundOneImportant[this.cardsViewed]), 1)[0]);
+        this.cards.push(this.cards.splice(this.cards.indexOf(this.cards[this.cardsViewed]), 1)[0]);
       },
       goToNext() {
-        this.round = 3;
+        this.$emit('round-finished');
       }
     }
   }

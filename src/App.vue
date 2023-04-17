@@ -3,50 +3,65 @@
     <div class="header">
       <h1>Value Cards</h1>
       <p>The Common Core Values Exercise</p>
-    </div>    
+    </div>
 
-    <RoundOne v-if="round == 1"
-      :cards="cards" :roundOneImportant="roundOneImportant" :round="round"
-    />
+    <RoundOne v-if="roundIt == 1" :cards="cards" @round-finished="roundUp" @push-to-round-one="pushOne" />
 
-    <RoundOne v-else-if="round == 2"
-      :roundOneImportant="roundOneImportant" :roundTwoImportant="roundTwoImportant"
-    />
+    <RoundTwo v-else-if="roundIt == 2" :cards="roundOneImportant" @round-finished="roundUp" @push-to-round-two="pushTwo" />
+
+    <RoundThree v-else-if="roundIt == 3" :cards="roundTwoImportant" @round-finished="roundUp" @push-to-round-three="pushThree" />
 
   </div>
 </template>
 <script>
 import RoundOne from './views/RoundOne.vue';
 import RoundTwo from './views/RoundTwo.vue'
+import RoundThree from './views/RoundThree.vue'
 
 export default {
   name: 'App',
   components: {
     RoundOne,
-    RoundTwo
+    RoundTwo,
+    RoundThree
+  },
+  methods: {
+    roundUp() {
+      this.roundIt++;
+      console.log(this.roundIt)
+    },
+    pushOne(c) {
+      this.roundOneImportant.push(c);
+    },
+    pushTwo(i) {
+      this.roundTwoImportant.push(i);
+      console.log(this.roundTwoImportant)
+    },
+    pushThree(c) {
+      this.roundThreeImportant.push(c);      
+    }
   },
   data() {
     return {
-      round: 1,
+      roundIt: 1,
       cards: [
-        {
-          word: 'Accountability'
-        },
-        {
-          word: 'Achievement'
-        },
-        {
-          word: 'Teamwork'
-        },
-        {
-          word: 'Thrift'
-        },
-        {
-          word: 'Time'
-        }
+        { word: 'Empathy' },
+        { word: 'Quiet' },
+        { word: 'Risk' },
+        { word: 'Appreciation' },
+        { word: 'Parenting' },
+        { word: 'Admiration' },
+        { word: 'Surrender' },
+        { word: 'Faithfulness' },
+        { word: 'Adventure' },
+        { word: 'Contribution' },
+        { word: 'Truth' },
+        { word: 'Pleasure' },
+        { word: 'Security' }
       ],
       roundOneImportant: [],
-      roundTwoImportant: []
+      roundTwoImportant: [],
+      roundThreeImportant: []
     }
   }
 }
@@ -61,8 +76,11 @@ body {
   width: 400px;
   margin: 0 auto;
 }
+
 .header {
-  h1, p {
+
+  h1,
+  p {
     margin: 0;
     padding: 0;
     text-align: center;
@@ -81,6 +99,7 @@ body {
   padding-top: 2rem;
   text-align: center;
   line-height: 26px;
+
   span {
     display: inline-block;
     background-color: #fff;
@@ -91,6 +110,7 @@ body {
     font-weight: bold;
   }
 }
+
 .controls {
   display: flex;
   flex-direction: row;
@@ -135,7 +155,8 @@ button,
   padding: 1rem 0;
 }
 
-.hide-this, .hidden {
+.hide-this,
+.hidden {
   visibility: hidden;
   opacity: 0;
 }
@@ -159,17 +180,19 @@ button,
   h3 {
     font-size: 36px;
   }
+
   &--deck-starter {
     cursor: pointer;
+
     h3 {
       font-size: 1rem;
       color: salmon;
       font-weight: bold;
     }
+
     &:hover {
-      background-color:#ececec;
+      background-color: #ececec;
     }
 
   }
-}
-</style>
+}</style>
