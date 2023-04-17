@@ -1,22 +1,20 @@
 <template>
     <div class="roundone">
-  
-      <!-- <ButtonReset @reset-deck="resetDeck" :class="{hidden: !deckStarted}" /> -->
         
       <div class="title">
         <h2>Round One</h2>
       </div>      
 
       <CardCounter :cards="cards" :cardsViewed="cardsViewed" :class="{hidden: !deckStarted}" />
-  
-      <Cards v-if="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
       
-      <Controls :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" :class="{hidden: !deckStarted}" />
+      <Cards v-show="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
       
+      <Transition>
+        <Controls v-show="deckStarted" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" />
+      </Transition>
+
       <ButtonNext :cards="cards" :cardsViewed="cardsViewed" @go-to-next="goToNext">Begin round 2</ButtonNext>
       
-      <p>When you see each card, tap the buttons to tell us whether the each value is important, or not important.<br>Reminder: You’ll have 6 seconds for each card before the card is passed to be revisited. Don’t think too hard about this, go with your gut.</p>
-
     </div>
   </template>
   <script>
@@ -25,7 +23,6 @@
   import Results from '../components/Results.vue'
   import CardCounter from '../components/CardCounter.vue'
   import ButtonNext from '../components/ButtonNext.vue'
-  import ButtonReset from '../components/ButtonReset.vue'
   
   export default {
     props: [
@@ -42,7 +39,6 @@
     components: {
       Cards,
       ButtonNext,
-      ButtonReset,
       Controls,
       Results,
       CardCounter

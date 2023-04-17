@@ -1,0 +1,103 @@
+@import 'vue-transitions.scss';
+@import 'btn.scss';
+@import 'cards.scss';
+@import 'controls.scss';
+
+:root {
+  --color-primary: #00A792;
+  --color-primary-light: #00D0B7;
+}
+
+body {
+  font-family: 'Questrial', sans-serif;
+  font-size: 16px;
+  height: 100vh;
+  background: rgb(214,214,214);
+  background: linear-gradient(0deg, rgba(214,214,214,1) 0%, rgba(255,255,255,1) 100%);
+}
+
+#app {}
+
+.main {
+  width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  border-radius: 2px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: .75rem;
+}
+
+p,
+li,
+li p,
+span {
+  margin: .5rem;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 24px;
+}
+
+.cnt-block {
+  $this: &;
+
+  &--home-hero {
+    text-align: center;
+    padding: 2rem;
+  }
+
+  &--home-header {
+    text-align: center;
+    padding: 2rem 0 0 0;
+    h1 {
+      margin: .25rem 0;
+    }
+    p {
+      margin: 0;
+    }
+  }
+  &--directions {
+    padding-top: 2rem;
+  }
+}
+
+.title {
+  h2 {
+    margin: 0;
+    padding: .30rem 0 2rem 0;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+}
+
+.number {
+  padding-top: 0;
+  text-align: center;
+  line-height: 26px;
+  color: #616161;
+
+  span {
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 100px;
+    width: 24px;
+    height: 24px;
+    color: var(--color-primary);
+    font-weight: bold;
+  }
+}
+
+.hide-this,
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}

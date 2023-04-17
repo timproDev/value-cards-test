@@ -7,13 +7,11 @@
 
       <CardCounter :cards="cards" :cardsViewed="cardsViewed" :class="{hidden: !deckStarted}" />
       
-      <Cards v-if="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
+      <Cards v-show="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
       
       <Controls :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" :class="{hidden: !deckStarted}" />
 
-      <ButtonNext :cards="cards" :cardsViewed="cardsViewed" @go-to-next="goToNext">See your values!</ButtonNext>
-
-      <p>When you see each card, tap the buttons to tell us whether the each value is modertaley important or somewhat important.<br>Reminder: You’ll have 6 seconds for each card before the card is passed to be revisited.</p>
+      <ButtonNext :cards="cards" :cardsViewed="cardsViewed" @go-to-next="goToNext">See your values!</ButtonNext>      
       
     </div>
   </template>

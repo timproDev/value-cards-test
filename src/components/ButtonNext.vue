@@ -1,7 +1,7 @@
 <template lang="">
     <button
       type="button"
-      class="next-btn"
+      class="btn btn--next"
       v-if="cardsViewed == cards.length"      
       @click.prevent="goToNext"
     >
