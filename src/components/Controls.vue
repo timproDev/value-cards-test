@@ -7,11 +7,7 @@
 </template>
 <script>
 export default {
-    props: [
-        "play",
-        "stage"
-    ],
-    emit: [
+    emits: [
         "is-not-important",
         "is-important",
         "card-passed"
