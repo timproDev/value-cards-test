@@ -16,7 +16,7 @@
     <RoundThree v-else-if="deckRound == 3" :deckRound="deckRound" :cards="roundTwoImportant" @round-finished="roundUp"
       @push-to-round-three="pushThree" />
 
-    <Results v-else :cards="roundThreeImportant" />
+    <Results v-else :cards="roundThreeImportant" @reset-deck="resetDeck" />
 
   </div>
 </template>
@@ -50,6 +50,12 @@ export default {
     },
     pushThree(c) {
       this.roundThreeImportant.push(c);
+    },
+    resetDeck() {
+      this.deckRound = 0;
+      this.roundOneImportant = [];
+      this.roundTwoImportant = [];
+      this.roundThreeImportant = [];
     }
   },
   data() {
