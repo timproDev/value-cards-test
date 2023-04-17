@@ -9,7 +9,9 @@
       
       <Cards v-if="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
       
-      <Controls :roundIt="roundIt" @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" :class="{hidden: !deckStarted}" />
+      <Controls :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" :class="{hidden: !deckStarted}" />
+
+      <ButtonNext :cards="cards" :cardsViewed="cardsViewed" @go-to-next="goToNext">See your values!</ButtonNext>
 
     </div>
   </template>
@@ -17,18 +19,23 @@
   import Cards from '../components/Cards.vue'
   import Controls from '../components/Controls.vue'
   import CardCounter from '../components/CardCounter.vue'
+  import ButtonNext from '../components/ButtonNext.vue'
+
   export default {
     components: {
       Cards,
       Controls,
-      CardCounter
+      CardCounter,
+      ButtonNext
     },
     props: [
         "cards",
-        "roundIt"
+        "deckRound",
+        "round-finished"
     ],
     emits: [
-      'push-to-round-three'
+      'push-to-round-three',
+      'round-finished'
     ],
     data() {
         return {

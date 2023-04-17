@@ -11,9 +11,9 @@
   
       <Cards v-if="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
       
-      <Controls :roundIt="roundIt" @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" :class="{hidden: !deckStarted}" />
+      <Controls :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" :class="{hidden: !deckStarted}" />
       
-      <ButtonNext :cards="cards" :cardsViewed="cardsViewed" @go-to-next="goToNext" />
+      <ButtonNext :cards="cards" :cardsViewed="cardsViewed" @go-to-next="goToNext">Begin round 2</ButtonNext>
 
     </div>
   </template>
@@ -28,7 +28,7 @@
   export default {
     props: [
         "cards",
-        "roundIt"
+        "deckRound"
     ],
     emits:['round-finished', 'push-to-round-one'],
     data() {

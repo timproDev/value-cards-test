@@ -5,11 +5,13 @@
       <p>The Common Core Values Exercise</p>
     </div>
 
-    <RoundOne v-if="roundIt == 1" :roundIt="roundIt" :cards="cards" @round-finished="roundUp" @push-to-round-one="pushOne" />
+    <RoundOne v-if="deckRound == 1" :deckRound="deckRound" :cards="cards" @round-finished="roundUp" @push-to-round-one="pushOne" />
 
-    <RoundTwo v-else-if="roundIt == 2" :roundIt="roundIt" :cards="roundOneImportant" @round-finished="roundUp" @push-to-round-two="pushTwo" />
+    <RoundTwo v-else-if="deckRound == 2" :deckRound="deckRound" :cards="roundOneImportant" @round-finished="roundUp" @push-to-round-two="pushTwo" />
 
-    <RoundThree v-else-if="roundIt == 3" :roundIt="roundIt" :cards="roundTwoImportant" @round-finished="roundUp" @push-to-round-three="pushThree" />
+    <RoundThree v-else-if="deckRound == 3" :deckRound="deckRound" :cards="roundTwoImportant" @round-finished="roundUp" @push-to-round-three="pushThree" />
+
+    <Results v-else :cards="roundThreeImportant" />
 
   </div>
 </template>
@@ -17,18 +19,20 @@
 import RoundOne from './views/RoundOne.vue';
 import RoundTwo from './views/RoundTwo.vue'
 import RoundThree from './views/RoundThree.vue'
+import Results from './components/Results.vue'
 
 export default {
   name: 'App',
   components: {
     RoundOne,
     RoundTwo,
-    RoundThree
+    RoundThree,
+    Results
   },
   methods: {
     roundUp() {
-      this.roundIt++;
-      console.log(this.roundIt)
+      this.deckRound++;
+      console.log(this.deckRound)
     },
     pushOne(c) {
       this.roundOneImportant.push(c);
@@ -43,7 +47,7 @@ export default {
   },
   data() {
     return {
-      roundIt: 1,
+      deckRound: 1,
       cards: [
         { word: 'Empathy' },
         { word: 'Quiet' },

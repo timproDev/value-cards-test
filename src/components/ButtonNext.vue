@@ -4,7 +4,11 @@
       class="next-btn"
       v-if="cardsViewed == cards.length"      
       @click.prevent="goToNext"
-    >Go to next stage</button>
+    >
+    <slot>
+        Go to next
+    </slot>
+    </button>
 </template>
 <script>
 export default {

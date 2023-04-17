@@ -1,18 +1,18 @@
 <template>
     <div class="controls-wraper">
         <h4>How important?</h4>
-        <div class="controls" v-if="roundIt == 1">
+        <div class="controls" v-if="deckRound == 1">
             <button type="button" class="remove" @click.prevent=isNotImportant>Not important</button>
             <button type="button" class="add" @click.prevent=isImportant>Important</button>
             <button type="button" class="pass" @click.prevent=passCard>Come back to</button>
         </div>
-        <div class="controls" v-else-if="roundIt == 2">
+        <div class="controls" v-else-if="deckRound == 2">
             <button type="button" class="remove" @click.prevent=isNotImportant>Little</button>
             <button type="button" class="remove" @click.prevent=isNotImportant>Somewhat</button>
             <button type="button" class="add" @click.prevent=isImportant>Very</button>
             <button type="button" class="pass" @click.prevent=passCard>Come back to</button>
         </div>
-        <div class="controls" v-else-if="roundIt == 3">
+        <div class="controls" v-else-if="deckRound == 3">
             <button type="button" class="remove" @click.prevent=isNotImportant>Moderately</button>
             <button type="button" class="add" @click.prevent=isImportant>Super</button>
             <button type="button" class="pass" @click.prevent=passCard>Come back to</button>
@@ -22,7 +22,7 @@
 <script>
 export default {
     props: [
-        'roundIt'
+        'deckRound'
     ],
     emits: [
         "is-not-important",
