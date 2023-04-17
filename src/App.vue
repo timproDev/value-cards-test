@@ -5,17 +5,23 @@
       <p>The Common Core Values Exercise</p>
     </div>
 
-    <RoundOne v-if="deckRound == 1" :deckRound="deckRound" :cards="cards" @round-finished="roundUp" @push-to-round-one="pushOne" />
+    <Home v-if="deckRound == 0" @start-round="roundUp" />
 
-    <RoundTwo v-else-if="deckRound == 2" :deckRound="deckRound" :cards="roundOneImportant" @round-finished="roundUp" @push-to-round-two="pushTwo" />
+    <RoundOne v-else-if="deckRound == 1" :deckRound="deckRound" :cards="cards" @round-finished="roundUp"
+      @push-to-round-one="pushOne" />
 
-    <RoundThree v-else-if="deckRound == 3" :deckRound="deckRound" :cards="roundTwoImportant" @round-finished="roundUp" @push-to-round-three="pushThree" />
+    <RoundTwo v-else-if="deckRound == 2" :deckRound="deckRound" :cards="roundOneImportant" @round-finished="roundUp"
+      @push-to-round-two="pushTwo" />
+
+    <RoundThree v-else-if="deckRound == 3" :deckRound="deckRound" :cards="roundTwoImportant" @round-finished="roundUp"
+      @push-to-round-three="pushThree" />
 
     <Results v-else :cards="roundThreeImportant" />
 
   </div>
 </template>
 <script>
+import Home from './views/Home.vue'
 import RoundOne from './views/RoundOne.vue';
 import RoundTwo from './views/RoundTwo.vue'
 import RoundThree from './views/RoundThree.vue'
@@ -24,6 +30,7 @@ import Results from './components/Results.vue'
 export default {
   name: 'App',
   components: {
+    Home,
     RoundOne,
     RoundTwo,
     RoundThree,
@@ -42,12 +49,12 @@ export default {
       console.log(this.roundTwoImportant)
     },
     pushThree(c) {
-      this.roundThreeImportant.push(c);      
+      this.roundThreeImportant.push(c);
     }
   },
   data() {
     return {
-      deckRound: 1,
+      deckRound: 0,
       cards: [
         { word: 'Empathy' },
         { word: 'Quiet' },
@@ -56,6 +63,27 @@ export default {
         { word: 'Parenting' },
         { word: 'Admiration' },
         { word: 'Surrender' },
+        { word: 'Action' },
+        { word: 'Excellence' },
+        { word: 'Inspiration' },
+        { word: 'Beauty' },
+        { word: 'Peace' },
+        { word: 'Control' },
+        { word: 'Challenge' },
+        { word: 'Belief' },
+        { word: 'Nurture' },
+        { word: 'Hope' },
+        { word: 'Gratitude' },
+        { word: 'Self-Expression' },
+        { word: 'Sacredness' },
+        { word: 'Calm' },
+        { word: 'Change' },
+        { word: 'Learning' },
+        { word: 'Accomplishment' },
+        { word: 'Nature' },
+        { word: 'Community' },
+        { word: 'Fairness' },
+        { word: 'Partnership' },
         { word: 'Faithfulness' },
         { word: 'Adventure' },
         { word: 'Contribution' },
