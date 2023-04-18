@@ -9,9 +9,11 @@
       
       <Cards v-show="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
       
-      <Controls :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" :class="{hidden: !deckStarted}" />
-
-      <ButtonNext :cards="cards" :cardsViewed="cardsViewed" @go-to-next="goToNext">See your values!</ButtonNext>      
+      <Controls v-show="deckStarted" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" />
+      
+      <Transition name="apple">
+        <ButtonNext v-show="cardsViewed == cards.length" @go-to-next="goToNext">See your values!</ButtonNext>      
+      </Transition>
       
     </div>
   </template>

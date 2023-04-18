@@ -1,5 +1,5 @@
 <template>
-    <div class="results">
+    <div class="cnt-block cnt-block--results">
         <h2>Your values are:</h2>
         <ul v-if="cards">
             <li v-for="c in cards">{{ c.word }}</li>
@@ -8,7 +8,7 @@
         type="button" 
             class="btn btn--reset"
             @click.prevent="resetDeck"
-        >reset</button>
+        >Restart</button>
     </div>
 </template>
 <script>
