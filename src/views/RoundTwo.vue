@@ -1,6 +1,5 @@
 <template>
-    <div class="roundtwo">
-        
+<div class="round-wrapper">        
       <div class="title">
         <h2>Round Two</h2>
       </div>      

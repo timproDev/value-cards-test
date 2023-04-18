@@ -1,3 +1,5 @@
+@import 'mqs.scss';
+@import 'reset.scss';
 @import 'vue-transitions.scss';
 @import 'btn.scss';
 @import 'cards.scss';
@@ -16,13 +18,14 @@ body {
   background: linear-gradient(0deg, rgba(214,214,214,1) 0%, rgba(255,255,255,1) 100%);
 }
 
-#app {}
+#app {
+  height: 100%;
+}
 
 .main {
-  width: 400px;
-  margin: 0 auto;
-  padding: 2rem;
-  border-radius: 2px;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 h1,
@@ -47,21 +50,40 @@ span {
 .cnt-block {
   $this: &;
 
-  &--home-hero {
-    text-align: center;
-    padding: 2rem;
-  }
-
   &--home-header {
     text-align: center;
-    padding: 2rem 0 0 0;
+    background-color: #eeeeee;
+    padding: .75rem 0;
+    color: #313131;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     h1 {
-      margin: .25rem 0;
+      margin: 0;
+      font-size: 1.25rem;
+      text-transform: uppercase;
     }
     p {
       margin: 0;
+      font-size: .85rem;
+      line-height: 14px;
     }
   }
+
+  &--home-hero {
+    text-align: center;
+    padding: 2rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+  }
+
   &--results {
     padding: 2rem;
     h2 {
@@ -85,9 +107,9 @@ span {
 }
 
 .title {
+  padding: 13vh 0 2vh 0;
   h2 {
     margin: 0;
-    padding: .30rem 0 2rem 0;
     font-size: 18px;
     font-weight: bold;
     text-align: center;
