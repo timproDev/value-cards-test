@@ -5,6 +5,8 @@
       <p>The Common Core Values Exercise</p>
     </div>
 
+    <Timer />
+
     <Transition appear mode="out-in">
 
     <Home v-if="deckRound == 0" @start-round="roundUp" />
@@ -30,6 +32,7 @@ import RoundOne from './views/RoundOne.vue';
 import RoundTwo from './views/RoundTwo.vue'
 import RoundThree from './views/RoundThree.vue'
 import Results from './components/Results.vue'
+import Timer from './components/Timer.vue';
 
 export default {
   name: 'App',
@@ -38,7 +41,8 @@ export default {
     RoundOne,
     RoundTwo,
     RoundThree,
-    Results
+    Results,
+    Timer
   },
   methods: {
     roundUp() {
