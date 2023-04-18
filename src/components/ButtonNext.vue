@@ -16,7 +16,7 @@ export default {
             this.$emit('go-to-next')
         }
     },
-    emit: [
+    emits: [
         'go-to-next'
     ]
 }

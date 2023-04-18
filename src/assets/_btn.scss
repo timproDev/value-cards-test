@@ -1,80 +1,73 @@
 .btn {
   position: relative;
   display: inline-flex;
-  text-decoration: none;
-  font-weight: bold;
   align-items: center;
   justify-content: center;
-  //
-  background-color: var(--color-primary-light);
-  border: none;
-  outline: none;
-  cursor: pointer;
+  font-weight: bold;
+  background-color: transparent;
+  border: 6px solid #fff;
   border-radius: 160px;
   width: 100px;
   height: 100px;
+  cursor: pointer;
+  outline: none;
+  color: #222222;
   transition: all 220ms linear;
-  background-color: transparent;
-  border: 6px solid #fff;
+  
   &:hover {
     border-color: var(--color-primary-light);
+
     &:active {
-      background-color:var(--color-primary-light);
+      background-color: var(--color-primary-light);
     }
-  }  
-}
+  }
 
-.btn--start {
-  margin-top: 3rem;  
-}
+  &--start {
+    margin-top: 3rem;
+  }
 
-.btn--reset {
-  // width: auto;
-  // background-color: transparent;
-  // border: none;
-  // text-decoration: underline;
-  // display: inline;
-  // height: auto;
-  // padding: 1rem 0;
-  // position: absolute;
-  // top: 20rem;
-  // left: 0;
-  // right: 0;
-  // margin: 0 auto;
-  width: 100%;
-  padding: 1rem;
-  height: auto;
-  margin-top: 1rem;
-}
+  &--reset {
+    width: 100%;
+    height: auto;
+    margin-top: 1rem;
+    padding: 1rem;
+    border: none;
+    text-decoration: underline;
+  }
 
-.btn--add, .btn--remove {
-  flex-grow: 1;
-}
-.btn--pass {
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  border-radius: 4px;
-  width: fit-content;
-  // display: inline-block;
-  padding: .25rem .5rem;
-  border-width: 4px;
-  height: auto;
-}
+  &--add,
+  &--remove {
+    flex-grow: 1;
+  }
 
-.roundone, .roundtwo, .roundthree {
-  position: relative;
-}
-.btn--next {
-  position: absolute;
-  top: 35vh;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
+  &--pass {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    border-radius: 4px;
+    width: fit-content;
+    height: auto;
+    padding: 0.25rem 0.5rem;
+    border-width: 4px;
+  }
+
+  &--next {
+    position: absolute;
+    top: 35vh;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
 }
 
 .controls {
+  position: relative;
+}
+
+.roundone,
+.roundtwo,
+.roundthree {
   position: relative;
 }
