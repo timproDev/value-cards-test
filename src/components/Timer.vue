@@ -8,6 +8,7 @@
   </template>
   
   <script>
+
   export default {
     data() {
       return {
@@ -20,37 +21,42 @@
     ],
     watch: { // watch data for changes
       cardsViewed() {
-        console.log('card viewed') //if card this.cardsViewed, restart timer
       }
-      // how to kill the timer and restart the timer if the varViewed data changes
     },
     emits: [
       'times-up'
     ],
     mounted() {
-      this.startCountdown();
+      this.timerFunc();
     },
     methods: {
-      startCountdown() {
+      timerFunc() {
         let duration = this.time;
         let start = Date.now();
-        let end = start + duration * 1000;
+        let end = start + duration * 1000;        
         
-        let timer = setInterval(() => {
+        let timerTest = setInterval(() => {
           let now = Date.now();
-          let timeLeft = Math.round((end - now) / 1000);
-  
-          if (timeLeft < 0) {
-            clearInterval(timer);
-            this.progress = 100;
-            this.$emit('times-up')
-            return;
-          }
-  
+          let timeLeft = Math.round((end - now) / 1000);          
+
           this.time = timeLeft;
           let elapsed = now - start;
-          this.progress = (elapsed / (duration * 1000)) * 105;
-        }, 50);
+          this.progress = (elapsed / (duration * 1000)) * 100;
+
+          if (timeLeft < 0) {
+          // if (timeLeft < 0 || this.timerStatus == false) {
+            clearInterval(timerTest);
+            this.progress = 0;
+            this.time = 5;
+            this.$emit('times-up')
+            return;
+          } else if (this.timeStopped) {
+            clearInterval(timerTest);
+            this.progress = 0;
+            this.time = 5;
+          }
+        }, 5);
+        // https://stackoverflow.com/questions/8126466/how-do-i-reset-the-setinterval-timer
       }
     }
   };

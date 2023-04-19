@@ -9,7 +9,7 @@
       
       <Cards v-show="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
       
-      <Timer v-if="deckStarted" :cardsViewed="cardsViewed" @times-up="cardPassed" />
+      <!-- <Timer v-if="deckStarted" :cardsViewed="cardsViewed" @times-up="cardPassed" /> -->
       
       <Controls v-if="deckStarted" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" />
       
