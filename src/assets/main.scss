@@ -21,6 +21,11 @@ body {
 
 #app {
   height: 100%;
+  @include mq('tablet') {
+    max-width: 580px;
+    margin: 0 auto;
+    height: 800px;
+  }
 }
 
 .main {
@@ -52,7 +57,7 @@ span {
 
   &--home-header {
     text-align: center;
-    background-color: #eeeeee;
+    border-bottom: 2px dashed #eeeeee;
     padding: .75rem 0;
     color: #313131;
     display: flex;

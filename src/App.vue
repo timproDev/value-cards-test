@@ -7,18 +7,18 @@
 
     <Transition appear mode="out-in">
 
-    <Home v-if="deckRound == 0" @start-round="roundUp" />
-    
-    <RoundOne v-else-if="deckRound == 1" :deckRound="deckRound" :cards="cards" @round-finished="roundUp"
-      @push-to-round-one="pushOne" />
-    
-    <RoundTwo v-else-if="deckRound == 2" :deckRound="deckRound" :cards="roundOneImportant" @round-finished="roundUp"
-      @push-to-round-two="pushTwo" />
+      <Home v-if="deckRound == 0" @start-round="roundUp" />
 
-    <RoundThree v-else-if="deckRound == 3" :deckRound="deckRound" :cards="roundTwoImportant" @round-finished="roundUp"
-      @push-to-round-three="pushThree" />
+      <RoundOne v-else-if="deckRound == 1" :deckRound="deckRound" :cards="cards" @round-finished="roundUp"
+        @push-to-round-one="pushOne" />
 
-    <Results v-else :cards="roundThreeImportant" @reset-deck="resetDeck" />
+      <RoundTwo v-else-if="deckRound == 2" :deckRound="deckRound" :cards="roundOneImportant" @round-finished="roundUp"
+        @push-to-round-two="pushTwo" />
+
+      <RoundThree v-else-if="deckRound == 3" :deckRound="deckRound" :cards="roundTwoImportant" @round-finished="roundUp"
+        @push-to-round-three="pushThree" />
+
+      <Results v-else :cards="roundThreeImportant" @reset-deck="resetDeck" />
 
     </Transition>
 
@@ -71,13 +71,110 @@ export default {
         { word: 'Risk' },
         { word: 'Appreciation' },
         { word: 'Parenting' },
+        { word: 'Admiration' },
+        { word: 'Surrender' },
+        { word: 'Action' },
+        { word: 'Excellence' },
+        { word: 'Inspiration' },
+        { word: 'Beauty' },
+        { word: 'Peace' },
+        { word: 'Control' },
+        { word: 'Challenge' },
+        { word: 'Belief' },
+        { word: 'Nurture' },
+        { word: 'Hope' },
+        { word: 'Gratitude' },
+        { word: 'Self-Expression' },
+        { word: 'Sacredness' },
+        { word: 'Calm' },
+        { word: 'Change' },
+        { word: 'Learning' },
+        { word: 'Accomplishment' },
+        { word: 'Nature' },
+        { word: 'Community' },
+        { word: 'Fairness' },
         { word: 'Partnership' },
         { word: 'Faithfulness' },
         { word: 'Adventure' },
         { word: 'Contribution' },
         { word: 'Truth' },
         { word: 'Pleasure' },
-        { word: 'Security' }
+        { word: 'Security' },
+        { word: 'Service' },
+        { word: 'Happiness' },
+        { word: 'Power' },
+        { word: 'Serenity' },
+        { word: 'Enlightenment' },
+        { word: 'Play' },
+        { word: 'Relationship' },
+        { word: 'Inner' },
+        { word: 'Strength' },
+        { word: 'Invention' },
+        { word: 'Encouragement' },
+        { word: 'Fun' },
+        { word: 'Equanimity' },
+        { word: 'Reliability' },
+        { word: 'Honor' },
+        { word: 'Work' },
+        { word: 'Order' },
+        { word: 'Connection' },
+        { word: 'Structure' },
+        { word: 'Strength' },
+        { word: 'Intellect' },
+        { word: 'Spirituality' },
+        { word: 'Passion' },
+        { word: 'Self-Respect' },
+        { word: 'Imagination' },
+        { word: 'Planning' },
+        { word: 'Humor' },
+        { word: 'Patience' },
+        { word: 'Friendship' },
+        { word: 'Joy' },
+        { word: 'Honesty' },
+        { word: 'Wholeness' },
+        { word: 'Persuasion' },
+        { word: 'Intuition' },
+        { word: 'Rules' },
+        { word: 'Dignity' },
+        { word: 'Family' },
+        { word: 'Love' },
+        { word: 'Home' },
+        { word: 'Leadership' },
+        { word: 'Dependability' },
+        { word: 'Consistency' },
+        { word: 'Grace' },
+        { word: 'Mastery' },
+        { word: 'Laughter' },
+        { word: 'Integrity' },
+        { word: 'Support' },
+        { word: 'Winning' },
+        { word: 'Growth' },
+        { word: 'Creativity' },
+        { word: 'Loyalty' },
+        { word: 'Health' },
+        { word: 'Tradition' },
+        { word: 'Compassion' },
+        { word: 'Sexuality' },
+        { word: 'Respect' },
+        { word: 'Safety' },
+        { word: 'Attention' },
+        { word: 'Spontaneity' },
+        { word: 'Courage' },
+        { word: 'Understanding' },
+        { word: 'Pride' },
+        { word: 'Rituals' },
+        { word: 'Wealth' },
+        { word: 'Sensuality' },
+        { word: 'Justice' },
+        { word: 'Trust' },
+        { word: 'Discovery' },
+        { word: 'Vitality' },
+        { word: 'Feelings' },
+        { word: 'Self-Control' },
+        { word: 'Freedom' },
+        { word: 'Kindness' },
+        { word: 'Independence' },
+        { word: 'Openness' }
       ],
       roundOneImportant: [],
       roundTwoImportant: [],
@@ -86,6 +183,4 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
