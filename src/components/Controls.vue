@@ -28,6 +28,7 @@
 </template>
 
 <script>
+
 export default {
     // Receive props from parent component
     props: [
@@ -42,11 +43,11 @@ export default {
     methods: {
         // Emit event when "Not important" button is clicked
         isNotImportant() {
-            this.$emit('is-not-important')
+            this.$emit('is-not-important');
         },
         // Emit event when "Important" or "Very" button is clicked
         isImportant() {
-            this.$emit('is-important')
+            this.$emit('is-important');
         },
         // Emit event when "Pass" button is clicked
         passCard() {

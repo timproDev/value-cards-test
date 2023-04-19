@@ -9,6 +9,8 @@
       
       <Cards v-show="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted" @start-deck="startDeck" />
       
+      <Timer v-if="deckStarted" :cardsViewed="cardsViewed" @times-up="cardPassed" />
+      
       <Controls v-if="deckStarted" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant" @card-passed="cardPassed" />
       
       <Transition name="apple">
@@ -23,6 +25,7 @@
   import Results from '../components/Results.vue'
   import CardCounter from '../components/CardCounter.vue'
   import ButtonNext from '../components/ButtonNext.vue'
+  import Timer from '../components/Timer.vue';
   
   export default {
     props: [
@@ -41,13 +44,15 @@
       ButtonNext,
       Controls,
       Results,
-      CardCounter
+      CardCounter,
+      Timer
     },
     watch: { // watch data for changes
       cardsViewed(val) {
         if (val == this.cards.length) {
            this.deckStarted = false;
         }
+        // console.log('card viewed'), if card this.cardsViewed, restart timer
       }
     },
     methods: {
@@ -60,9 +65,11 @@
       },
       isImportant() {
         this.$emit('push-to-round-one',this.cards[this.cardsViewed]);
+        this.startTimer = true;
         this.cardsViewed++;
       },
       isNotImportant() {
+        this.startTimer = true;
         this.cardsViewed++;
       },
       cardPassed() {
