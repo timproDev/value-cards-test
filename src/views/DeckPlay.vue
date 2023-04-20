@@ -13,8 +13,6 @@
     <Cards v-show="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted"
       @start-deck="startDeck" />
 
-    <!-- <Timer v-if="deckStarted" :cardsViewed="cardsViewed" @times-up="cardPassed" /> -->
-
     <Controls v-if="deckStarted" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant"
       @card-passed="cardPassed" />
 
@@ -29,7 +27,6 @@ import Cards from '../components/Cards.vue';
 import Controls from '../components/Controls.vue';
 import Results from '../components/Results.vue'
 import ButtonNext from '../components/ButtonNext.vue'
-import Timer from '../components/Timer.vue';
 
 export default {
   props: [
@@ -50,8 +47,7 @@ export default {
     Cards,
     ButtonNext,
     Controls,
-    Results,
-    Timer
+    Results
   },
   watch: {
     cardsViewed(val) {
