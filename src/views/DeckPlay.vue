@@ -1,5 +1,3 @@
-<!-- // set immutable nuber of cards in deck for each round -->
-
 <template>
   <div class="round-wrapper">
 
@@ -7,11 +5,10 @@
       <h2>Round {{ deckRound }}</h2>
     </div>
 
-    <!-- <CardCounter :cards="cards" :cardsViewed="cardsViewed" :class="{ hidden: !deckStarted }" /> -->
     <div :class="{ hidden: !deckStarted }">
       <p :class="cardsViewed < cards.length ? `show-this` : `hide-this`" class="number"
-      ><span>{{ ( 23 - cardsViewed) }}</span> cards remaining</p>
-    </div>    
+      ><span>{{ cardsRemaining }}</span> cards remaining</p>
+    </div>
 
     <Cards v-show="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted"
       @start-deck="startDeck" />
@@ -31,7 +28,6 @@
 import Cards from '../components/Cards.vue';
 import Controls from '../components/Controls.vue';
 import Results from '../components/Results.vue'
-import CardCounter from '../components/CardCounter.vue'
 import ButtonNext from '../components/ButtonNext.vue'
 import Timer from '../components/Timer.vue';
 
@@ -55,27 +51,27 @@ export default {
     ButtonNext,
     Controls,
     Results,
-    CardCounter,
     Timer
   },
-  watch: { // watch data for changes
-    // cards: {
-    //   handler(val) {
-    //     if (val == this.cards.length) {
-    //       this.deckStarted = false;
-    //       this.$emit('cards-finished');
-    //     }
-    //   },
-    //   deep: true
-    // },
+  watch: {
     cardsViewed(val) {
-      console.log("CARDS VIEWED: this.cards.length", this.cards.length)
-      console.log("CARDS VIEWED: this.cardsViewed", this.cardsViewed)
-
       if (val == this.cards.length) {
         this.deckStarted = false;
         this.$emit('cards-finished');
       }
+    },
+    cards: {
+      handler(val) {
+      if (val.length - this.cardsViewed == 0) {
+        // console.log("watcher zero")
+        this.deckStarted = false;
+      }
+      }, deep: true
+    }
+  },
+  computed: {
+    cardsRemaining() {
+      return this.cards.length - this.cardsViewed;
     }
   },
   methods: {
@@ -98,9 +94,9 @@ export default {
         if (removedItem > -1) {
           this.cards.splice(removedItem, 1);
         }
-      this.cardsViewed++;
-      console.log("NOT Important: cards length",this.cards.length)
-      console.log("NOT important: this.cardsViewed", this.cardsViewed)
+      // this.cardsViewed++;
+      // console.log("NOT Important: cards length",this.cards.length)
+      // console.log("NOT important: this.cardsViewed", this.cardsViewed)
     },
     cardPassed() {
       // push to bottom of deck
