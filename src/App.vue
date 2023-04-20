@@ -8,14 +8,11 @@
 
       <Home v-if="deckRound == 0" @start-round="roundUp" />
 
-      <RoundOne v-else-if="deckRound == 1" :deckRound="deckRound" :cards="cards" @round-finished="roundUp"
-        @push-to-round-one="pushOne" @cards-finished="isDeckFinished" />
+      <DeckPlay v-else-if="deckRound == 1" :deckRound="deckRound" :cards="cards" @round-finished="roundUp" @cards-finished="isDeckFinished" />
 
-      <RoundTwo v-else-if="deckRound == 2" :deckRound="deckRound" :cards="roundOneImportant" @round-finished="roundUp"
-        @push-to-round-two="pushTwo" />
+      <DeckPlay v-else-if="deckRound == 2" :deckRound="deckRound" :cards="cards" @round-finished="roundUp" @cards-finished="isDeckFinished" />
 
-      <RoundThree v-else-if="deckRound == 3" :deckRound="deckRound" :cards="roundTwoImportant" @round-finished="roundUp"
-        @push-to-round-three="pushThree" />
+      <DeckPlay v-else-if="deckRound == 3" :deckRound="deckRound" :cards="cards" @round-finished="roundUp" @cards-finished="isDeckFinished" />
 
       <Results v-else-if="this.completed == true" :cards="roundThreeImportant" @reset-deck="resetDeck" />
 
@@ -25,8 +22,7 @@
 </template>
 <script>
 import Home from './views/Home.vue'
-import RoundOne from './views/RoundOne.vue';
-import RoundTwo from './views/RoundTwo.vue'
+import DeckPlay from './views/DeckPlay.vue'
 import RoundThree from './views/RoundThree.vue'
 import Results from './components/Results.vue'
 
@@ -34,8 +30,7 @@ export default {
   name: 'App',
   components: {
     Home,
-    RoundOne,
-    RoundTwo,
+    DeckPlay,
     RoundThree,
     Results
   },
@@ -49,16 +44,17 @@ export default {
     //   deep: true
     // },
     deckFinished(val) {
-      if (
-        (val == true) && (this.roundOneImportant.length < 15 && this.roundOneImportant.length > 8)
-        ||
-        (val == true) && (this.roundTwoImportant.length < 15 && this.roundTwoImportant.length > 8)
-        ||
-        (val == true) && (this.roundThreeImportant.length < 15 && this.roundThreeImportant.length > 8)
-      ) {
-        console.log("fits the criteria!")
+      console.log('deck finished!', val)
+      // if (
+      //   (val == true) && (this.roundOneImportant.length < 15 && this.roundOneImportant.length > 8)
+      //   ||
+      //   (val == true) && (this.roundTwoImportant.length < 15 && this.roundTwoImportant.length > 8)
+      //   ||
+      //   (val == true) && (this.roundThreeImportant.length < 15 && this.roundThreeImportant.length > 8)
+      // ) {
+        
         // this.completed = true;
-      }
+      //}
     }
   },
   methods: {
@@ -69,20 +65,13 @@ export default {
       this.deckRound++;
       this.deckFinished = false;
     },
-    pushOne(c) {
-      this.roundOneImportant.push(c);
-    },
-    pushTwo(i) {
-      this.roundTwoImportant.push(i);
-    },
-    pushThree(c) {
-      this.roundThreeImportant.push(c);
+    pushImportant(c) {
+      this.importantDeck.push(c);
+      console.log('important deck includes:', this.importantDeck)
     },
     resetDeck() {
       this.deckRound = 0;
-      this.roundOneImportant = [];
-      this.roundTwoImportant = [];
-      this.roundThreeImportant = [];
+      this.importantDeck = [];
     }
   },
   data() {
@@ -116,11 +105,8 @@ export default {
         { word: 'Independence' },
         { word: 'Openness' }
       ],
-      roundOneImportant: [],
-      roundTwoImportant: [],
-      roundThreeImportant: []
+      importantDeck: []
     }
   }
 }
 </script>
-<style lang="scss"></style>
