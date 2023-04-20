@@ -32,7 +32,11 @@
         "cards",
         "deckRound"
     ],
-    emits:['round-finished', 'push-to-round-one'],
+    emits:[
+      'round-finished',
+      'push-to-round-one',
+      'cards-finished'
+    ],
     data() {
         return {
             cardsViewed: 0, // keep track of cards,
@@ -51,6 +55,7 @@
       cardsViewed(val) {
         if (val == this.cards.length) {
            this.deckStarted = false;
+           this.$emit('cards-finished');
         }
         // console.log('card viewed'), if card this.cardsViewed, restart timer
       }

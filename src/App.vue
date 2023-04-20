@@ -4,13 +4,12 @@
       <h1>Value Cards</h1>
       <p>The Common Core Values Exercise</p>
     </div>
-
     <Transition appear mode="out-in">
 
       <Home v-if="deckRound == 0" @start-round="roundUp" />
 
       <RoundOne v-else-if="deckRound == 1" :deckRound="deckRound" :cards="cards" @round-finished="roundUp"
-        @push-to-round-one="pushOne" />
+        @push-to-round-one="pushOne" @cards-finished="isDeckFinished" />
 
       <RoundTwo v-else-if="deckRound == 2" :deckRound="deckRound" :cards="roundOneImportant" @round-finished="roundUp"
         @push-to-round-two="pushTwo" />
@@ -18,7 +17,7 @@
       <RoundThree v-else-if="deckRound == 3" :deckRound="deckRound" :cards="roundTwoImportant" @round-finished="roundUp"
         @push-to-round-three="pushThree" />
 
-      <Results v-else :cards="roundThreeImportant" @reset-deck="resetDeck" />
+      <Results v-else-if="this.completed == true" :cards="roundThreeImportant" @reset-deck="resetDeck" />
 
     </Transition>
 
@@ -40,17 +39,41 @@ export default {
     RoundThree,
     Results
   },
+  watch: {
+    // roundOneImportant: {
+    //   handler(val) {
+    //     if ((val.length < 15 && val.length > 8) && (this.deckFinished == true)) {
+    //       console.log("fits the criteria!")
+    //     }
+    //   },
+    //   deep: true
+    // },
+    deckFinished(val) {
+      if (
+        (val == true) && (this.roundOneImportant.length < 15 && this.roundOneImportant.length > 8)
+        ||
+        (val == true) && (this.roundTwoImportant.length < 15 && this.roundTwoImportant.length > 8)
+        ||
+        (val == true) && (this.roundThreeImportant.length < 15 && this.roundThreeImportant.length > 8)
+      ) {
+        console.log("fits the criteria!")
+        // this.completed = true;
+      }
+    }
+  },
   methods: {
+    isDeckFinished() {
+      this.deckFinished = true;
+    },
     roundUp() {
       this.deckRound++;
-      console.log(this.deckRound)
+      this.deckFinished = false;
     },
     pushOne(c) {
       this.roundOneImportant.push(c);
     },
     pushTwo(i) {
       this.roundTwoImportant.push(i);
-      console.log(this.roundTwoImportant)
     },
     pushThree(c) {
       this.roundThreeImportant.push(c);
@@ -65,6 +88,9 @@ export default {
   data() {
     return {
       deckRound: 0,
+      exerciseStarted: false,
+      completed: false,
+      deckFinished: false,
       cards: [
         { word: 'Empathy' },
         { word: 'Quiet' },
@@ -72,92 +98,6 @@ export default {
         { word: 'Appreciation' },
         { word: 'Parenting' },
         { word: 'Admiration' },
-        { word: 'Surrender' },
-        { word: 'Action' },
-        { word: 'Excellence' },
-        { word: 'Inspiration' },
-        { word: 'Beauty' },
-        { word: 'Peace' },
-        { word: 'Control' },
-        { word: 'Challenge' },
-        { word: 'Belief' },
-        { word: 'Nurture' },
-        { word: 'Hope' },
-        { word: 'Gratitude' },
-        { word: 'Self-Expression' },
-        { word: 'Sacredness' },
-        { word: 'Calm' },
-        { word: 'Change' },
-        { word: 'Learning' },
-        { word: 'Accomplishment' },
-        { word: 'Nature' },
-        { word: 'Community' },
-        { word: 'Fairness' },
-        { word: 'Partnership' },
-        { word: 'Faithfulness' },
-        { word: 'Adventure' },
-        { word: 'Contribution' },
-        { word: 'Truth' },
-        { word: 'Pleasure' },
-        { word: 'Security' },
-        { word: 'Service' },
-        { word: 'Happiness' },
-        { word: 'Power' },
-        { word: 'Serenity' },
-        { word: 'Enlightenment' },
-        { word: 'Play' },
-        { word: 'Relationship' },
-        { word: 'Inner' },
-        { word: 'Strength' },
-        { word: 'Invention' },
-        { word: 'Encouragement' },
-        { word: 'Fun' },
-        { word: 'Equanimity' },
-        { word: 'Reliability' },
-        { word: 'Honor' },
-        { word: 'Work' },
-        { word: 'Order' },
-        { word: 'Connection' },
-        { word: 'Structure' },
-        { word: 'Strength' },
-        { word: 'Intellect' },
-        { word: 'Spirituality' },
-        { word: 'Passion' },
-        { word: 'Self-Respect' },
-        { word: 'Imagination' },
-        { word: 'Planning' },
-        { word: 'Humor' },
-        { word: 'Patience' },
-        { word: 'Friendship' },
-        { word: 'Joy' },
-        { word: 'Honesty' },
-        { word: 'Wholeness' },
-        { word: 'Persuasion' },
-        { word: 'Intuition' },
-        { word: 'Rules' },
-        { word: 'Dignity' },
-        { word: 'Family' },
-        { word: 'Love' },
-        { word: 'Home' },
-        { word: 'Leadership' },
-        { word: 'Dependability' },
-        { word: 'Consistency' },
-        { word: 'Grace' },
-        { word: 'Mastery' },
-        { word: 'Laughter' },
-        { word: 'Integrity' },
-        { word: 'Support' },
-        { word: 'Winning' },
-        { word: 'Growth' },
-        { word: 'Creativity' },
-        { word: 'Loyalty' },
-        { word: 'Health' },
-        { word: 'Tradition' },
-        { word: 'Compassion' },
-        { word: 'Sexuality' },
-        { word: 'Respect' },
-        { word: 'Safety' },
-        { word: 'Attention' },
         { word: 'Spontaneity' },
         { word: 'Courage' },
         { word: 'Understanding' },

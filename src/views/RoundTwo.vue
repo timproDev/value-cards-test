@@ -60,7 +60,6 @@
       },
       isImportant() {
         this.$emit('push-to-round-two',this.cards[this.cardsViewed]);
-        console.log('push-to-round-two',this.cards[this.cardsViewed])
         this.cardsViewed++;
       },
       isNotImportant() {
