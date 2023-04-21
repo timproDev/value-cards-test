@@ -17,7 +17,7 @@
       @card-passed="cardPassed" />
 
     <Transition name="apple">
-      <ButtonNext v-show="cardsViewed == cards.length" @go-to-next="goToNext">Begin round 2</ButtonNext>
+      <ButtonNext v-show="cardsViewed == cards.length" @go-to-next="goToNext"><slot></slot></ButtonNext>
     </Transition>
 
   </div>
@@ -35,7 +35,8 @@ export default {
   ],
   emits: [
     'round-finished',
-    'cards-finished'
+    'cards-finished',
+    'game-completed'
   ],
   data() {
     return {
@@ -50,17 +51,17 @@ export default {
     Results
   },
   watch: {
-    cardsViewed(val) {
-      if (val == this.cards.length) {
-        this.deckStarted = false;
-        this.$emit('cards-finished');
-      }
-    },
+    // cardsViewed(val) {
+    //   if (val == this.cards.length) {
+    //     this.deckStarted = false;
+    //     this.$emit('cards-finished');
+    //   }
+    // },
     cards: {
       handler(val) {
       if (val.length - this.cardsViewed == 0) {
-        // console.log("watcher zero")
         this.deckStarted = false;
+        this.$emit('cards-finished');
       }
       }, deep: true
     }
@@ -79,24 +80,19 @@ export default {
       this.cardsViewed = 0;
     },
     isImportant() {
-      // keep it
-      // iterate       
       this.cardsViewed++;
+      if (this.cardsViewed == this.cards.length) {
+        this.deckStarted = false;
+        this.$emit('cards-finished');
+      }
     },
     isNotImportant() {
-      // delete it
-      // iterate
       const removedItem = this.cards.indexOf(this.cards[this.cardsViewed]);
         if (removedItem > -1) {
           this.cards.splice(removedItem, 1);
         }
-      // this.cardsViewed++;
-      // console.log("NOT Important: cards length",this.cards.length)
-      // console.log("NOT important: this.cardsViewed", this.cardsViewed)
     },
     cardPassed() {
-      // push to bottom of deck
-      // don't iterate
       this.cards.push(this.cards.splice(this.cards.indexOf(this.cards[this.cardsViewed]), 1)[0]);
     },
     shuffleDeck(a) {
