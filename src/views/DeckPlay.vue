@@ -6,8 +6,10 @@
     </div>
 
     <div :class="{ hidden: !deckStarted }">
-      <p :class="cardsViewed < cards.length ? `show-this` : `hide-this`" class="number"><span>{{ cardsRemaining }}</span>
-        cards remaining</p>
+      <p :class="cardsViewed < cards.length ? `show-this` : `hide-this`" class="number">
+        <span>{{ cardsRemaining }}</span>
+        cards remaining
+      </p>
     </div>
 
     <Cards v-show="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted"
@@ -16,7 +18,7 @@
     <Controls v-if="deckStarted" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant"
       @card-passed="cardPassed" />
 
-    <ButtonNext v-show="cardsViewed == cards.length" @go-to-next="goToNext" :buttonMessage="buttonMessage">{{ buttonMessage }}
+    <ButtonNext v-show="cardsViewed == cards.length" @go-to-next="goToNext">{{ buttonMessage }}
     </ButtonNext>
 
   </div>
@@ -33,14 +35,12 @@ export default {
     "deckRound"
   ],
   emits: [
-    'round-finished',
+    'go-to-next',
     'game-completed'
   ],
   data() {
     return {
-      // keep track of cards,
       cardsViewed: 0,
-      // toggle view items for deck play,
       deckStarted: false,
       buttonMessage: 'Go to next',
       completed: false
@@ -84,7 +84,6 @@ export default {
       this.buttonMessage = "Let's see your values"
       this.$emit('game-completed');
       this.deckStarted = false;
-      // console.log("deckplay says game completed")
     },
     resetDeck() {
       this.deckStarted = false
@@ -120,7 +119,7 @@ export default {
       return a;
     },
     goToNext() {
-      this.$emit('round-finished');
+      this.$emit('go-to-next');
     }
   }
 }

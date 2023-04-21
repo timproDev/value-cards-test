@@ -7,34 +7,34 @@
 
     <Transition appear mode="out-in">
 
-      <Home v-if="deckRound == 0" @start-round="roundUp" />
-      <DeckPlay v-else-if="deckRound == 1"
+      <Home v-if="deckRound == 0" @start-round="goToNext" />
+      <DeckPlay v-else-if="deckRound == 1 && !results"
         :deckRound="deckRound"
         :cards="cards"
         @game-completed="gameCompleted"
-        @round-finished="roundUp"
-        @cards-finished="cardsFinished"
+        @go-to-next="goToNext"
         
         >{{ buttonMessage }}</DeckPlay>
-      <DeckPlay v-else-if="deckRound == 2"
+      <DeckPlay v-else-if="deckRound == 2 && !results"
         :deckRound="deckRound"
         :cards="cards"
         @game-completed="gameCompleted"
-        @round-finished="roundUp"
-        @cards-finished="cardsFinished"
+        @go-to-next="goToNext"
         
         >{{ buttonMessage }}</DeckPlay>
-      <DeckPlay v-else-if="deckRound == 3"
+      <DeckPlay v-else-if="deckRound == 3 && !results"
         :deckRound="deckRound"
         :cards="cards"
         @game-completed="gameCompleted"
-        @round-finished="roundUp"
-        @cards-finished="cardsFinished"
+        @go-to-next="goToNext"
         
-        >{{ buttonMessage }}</DeckPlay>
-      <Results v-else-if="completed == true" :cards="cards" @reset-deck="resetDeck" />
+        >{{ buttonMessage }}</DeckPlay>        
 
+        <Results v-else-if="results" :cards="cards" @reset-deck="resetDeck" />
     </Transition>
+
+    <!-- else show the results -->
+    
 
   </div>
 </template>
@@ -50,42 +50,29 @@ export default {
     DeckPlay,
     Results
   },
-  watch: {
-    deckFinished(val) {
-      console.log('deck finished!', val)
-    },
-    // deckRound(v) {
-    //   if (v == 1) {
-    //     this.buttonMessage = "Go Round 2"
-    //   } else if (v == 2) {
-    //     this.buttonMessage = "Round 3 next"
-    //   } else if (v == 3) {
-    //     this.buttonMessage = "Let's see your values"
-    //   }
-    // }
-  },
   methods: {
-    cardsFinished() {
-      this.deckFinished = true;
-    },
-    roundUp() {
-      // if game completed deckRound = completed, deckFinsihed = false
-      this.deckRound++;
-      this.deckFinished = false;
+    goToNext() {
+      if (this.completed == true) {
+        this.results = true;
+        return;
+      } else {
+        this.deckRound++;
+      }      
     },
     resetDeck() {
       this.deckRound = 0;
+      this.complete = false;
+      this.results = false;
     },
     gameCompleted() {
-      console.log("App says game completed")
+      this.completed = true;
     }
   },
   data() {
     return {
       deckRound: 0,
       completed: false,
-      deckFinished: false,
-      buttonMessage: '',
+      results: false,
       cards: [
         { word: 'Empathy' },
         { word: 'Quiet' },
