@@ -6,8 +6,8 @@
     </div>
 
     <div :class="{ hidden: !deckStarted }">
-      <p :class="cardsViewed < cards.length ? `show-this` : `hide-this`" class="number"
-      ><span>{{ cardsRemaining }}</span> cards remaining</p>
+      <p :class="cardsViewed < cards.length ? `show-this` : `hide-this`" class="number"><span>{{ cardsRemaining }}</span>
+        cards remaining</p>
     </div>
 
     <Cards v-show="cardsViewed < cards.length" :cards="cards" :cardsViewed="cardsViewed" :deckStarted="deckStarted"
@@ -16,9 +16,8 @@
     <Controls v-if="deckStarted" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant"
       @card-passed="cardPassed" />
 
-    <Transition name="apple">
-      <ButtonNext v-show="cardsViewed == cards.length" @go-to-next="goToNext"><slot></slot></ButtonNext>
-    </Transition>
+    <ButtonNext v-show="cardsViewed == cards.length" @go-to-next="goToNext" :buttonMessage="buttonMessage">{{ buttonMessage }}
+    </ButtonNext>
 
   </div>
 </template>
@@ -35,13 +34,16 @@ export default {
   ],
   emits: [
     'round-finished',
-    'cards-finished',
     'game-completed'
   ],
   data() {
     return {
-      cardsViewed: 0, // keep track of cards,
-      deckStarted: false
+      // keep track of cards,
+      cardsViewed: 0,
+      // toggle view items for deck play,
+      deckStarted: false,
+      buttonMessage: 'Go to next',
+      completed: false
     }
   },
   components: {
@@ -51,18 +53,21 @@ export default {
     Results
   },
   watch: {
-    // cardsViewed(val) {
-    //   if (val == this.cards.length) {
-    //     this.deckStarted = false;
-    //     this.$emit('cards-finished');
-    //   }
-    // },
+    deckRound(v) {
+      if (v == 1) {
+        this.buttonMessage = "Go Round 2"
+      } else if (v == 2) {
+        this.buttonMessage = "Round 3 next"
+      }
+    },
     cards: {
       handler(val) {
-      if (val.length - this.cardsViewed == 0) {
-        this.deckStarted = false;
-        this.$emit('cards-finished');
-      }
+        if (val.length - this.cardsViewed == 0) { // if this is the last card in deck, check complete criteria
+          if (this.cards.length < 15) {
+            this.endGame();
+          }
+          this.deckStarted = false;
+        }
       }, deep: true
     }
   },
@@ -75,22 +80,30 @@ export default {
     startDeck() {
       this.deckStarted = true;
     },
+    endGame() {
+      this.buttonMessage = "Let's see your values"
+      this.$emit('game-completed');
+      this.deckStarted = false;
+      // console.log("deckplay says game completed")
+    },
     resetDeck() {
       this.deckStarted = false
       this.cardsViewed = 0;
     },
     isImportant() {
       this.cardsViewed++;
-      if (this.cardsViewed == this.cards.length) {
+      if (this.cardsViewed == this.cards.length) { // if this is the lat card in deck, check complete criteria
+        if (this.cards.length < 15) {
+          this.endGame();
+        }
         this.deckStarted = false;
-        this.$emit('cards-finished');
       }
     },
     isNotImportant() {
       const removedItem = this.cards.indexOf(this.cards[this.cardsViewed]);
-        if (removedItem > -1) {
-          this.cards.splice(removedItem, 1);
-        }
+      if (removedItem > -1) {
+        this.cards.splice(removedItem, 1);
+      }
     },
     cardPassed() {
       this.cards.push(this.cards.splice(this.cards.indexOf(this.cards[this.cardsViewed]), 1)[0]);

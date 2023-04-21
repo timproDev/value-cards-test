@@ -4,13 +4,34 @@
       <h1>Value Cards</h1>
       <p>The Common Core Values Exercise</p>
     </div>
+
     <Transition appear mode="out-in">
 
       <Home v-if="deckRound == 0" @start-round="roundUp" />
-
-      <DeckPlay v-else-if="deckRound == 1" :deckRound="deckRound" :cards="cards" @round-finished="roundUp" @cards-finished="isDeckFinished">{{ buttonMessage }}</DeckPlay>
-      <DeckPlay v-else-if="deckRound == 2 && completed == false" :deckRound="deckRound" :cards="cards" @round-finished="roundUp" @cards-finished="isDeckFinished">{{ buttonMessage }}</DeckPlay>
-      <DeckPlay v-else-if="deckRound == 3 && completed == false" :deckRound="deckRound" :cards="cards" @round-finished="roundUp" @cards-finished="isDeckFinished">Yo!</DeckPlay>
+      <DeckPlay v-else-if="deckRound == 1"
+        :deckRound="deckRound"
+        :cards="cards"
+        @game-completed="gameCompleted"
+        @round-finished="roundUp"
+        @cards-finished="cardsFinished"
+        
+        >{{ buttonMessage }}</DeckPlay>
+      <DeckPlay v-else-if="deckRound == 2"
+        :deckRound="deckRound"
+        :cards="cards"
+        @game-completed="gameCompleted"
+        @round-finished="roundUp"
+        @cards-finished="cardsFinished"
+        
+        >{{ buttonMessage }}</DeckPlay>
+      <DeckPlay v-else-if="deckRound == 3"
+        :deckRound="deckRound"
+        :cards="cards"
+        @game-completed="gameCompleted"
+        @round-finished="roundUp"
+        @cards-finished="cardsFinished"
+        
+        >{{ buttonMessage }}</DeckPlay>
       <Results v-else-if="completed == true" :cards="cards" @reset-deck="resetDeck" />
 
     </Transition>
@@ -33,30 +54,30 @@ export default {
     deckFinished(val) {
       console.log('deck finished!', val)
     },
-    deckRound(v) {
-      if (v == 1) {
-        this.buttonMessage = "Go Round 2"
-      } else if (v == 2) {
-        this.buttonMessage = "Round 3 next"
-      } else if (v == 3) {
-        this.buttonMessage = "Let's see your values"
-      }
-    }
+    // deckRound(v) {
+    //   if (v == 1) {
+    //     this.buttonMessage = "Go Round 2"
+    //   } else if (v == 2) {
+    //     this.buttonMessage = "Round 3 next"
+    //   } else if (v == 3) {
+    //     this.buttonMessage = "Let's see your values"
+    //   }
+    // }
   },
   methods: {
-    isDeckFinished() {
-      if (this.cards.length < 15) {        
-        this.completed = true;
-        this.buttonMessage = "Let's see your values";
-      }
+    cardsFinished() {
       this.deckFinished = true;
     },
     roundUp() {
+      // if game completed deckRound = completed, deckFinsihed = false
       this.deckRound++;
       this.deckFinished = false;
     },
     resetDeck() {
       this.deckRound = 0;
+    },
+    gameCompleted() {
+      console.log("App says game completed")
     }
   },
   data() {
