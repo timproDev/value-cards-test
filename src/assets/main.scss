@@ -8,6 +8,7 @@
 :root {
   --color-primary: #00A792;
   --color-primary-light: #00D0B7;
+  --gradient-option-1: linear-gradient(0deg, rgba(214,214,214,1) 0%, rgba(255,255,255,1) 100%);
 }
 
 body {
@@ -15,7 +16,7 @@ body {
   font-size: 16px;
   height: 100vh;
   background: rgb(214,214,214);
-  background: linear-gradient(0deg, rgba(214,214,214,1) 0%, rgba(255,255,255,1) 100%);
+  background: var(--gradient-option-1);
   overflow: hidden;
 }
 

@@ -5,22 +5,23 @@
             <li v-for="c in cards">{{ c.word }}</li>
         </ul>
         <button
-        type="button" 
-            class="btn btn--reset"
-            @click.prevent="resetDeck"
-        >Restart</button>
+        type="button"
+        class="btn btn--next-stage"
+        @click.prevent="nextStage">
+        Sort your values
+        </button>
     </div>
 </template>
 <script>
 export default {
     props: ["cards"],
     methods: {
-        resetDeck() {
-            this.$emit('reset-deck')
+        nextStage() {
+            this.$emit('next-stage')
         }
     },
-    emit: [
-        'reset-deck'
+    emits: [
+        'next-stage'
     ]
 }
 </script>

@@ -26,13 +26,30 @@
     margin-top: 3rem;
   }
 
-  &--reset {
-    width: 100%;
+  &--back {
+    width: auto;
     height: auto;
-    margin-top: 1rem;
     padding: 1rem;
     border: none;
     text-decoration: underline;
+    position: absolute;
+    left: 0px;
+    top: 68px;
+    font-size: .75rem;
+    color: #909090;
+  }
+
+  &--reset {
+    width: auto;
+    height: auto;
+    padding: 1rem;
+    border: none;
+    text-decoration: underline;
+    position: absolute;
+    right: 0px;
+    top: 68px;
+    font-size: .75rem;
+    color: #909090;
   }
 
   &--add,
