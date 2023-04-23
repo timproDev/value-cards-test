@@ -23,11 +23,12 @@
       <!-- <p>You have <span>{{ cardDeck.length }}</span> values</p> -->
     </div>
 
-    <Cards v-show="cardsViewed < cardDeck.length && !results" :cards="cardDeck" :cardsViewed="cardsViewed" />
+    <Cards v-show="cardsViewed < cardDeck.length && !results" :cards="oneCard" :cardsViewed="cardsViewed" />
 
+    
     <Controls v-show="cardsViewed < cardDeck.length && !results" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant"
       @card-passed="cardPassed" />
-
+    
     <ButtonNext v-show="cardsViewed == cardDeck.length && !results" @go-to-next="goToNext">{{ buttonMessage }}</ButtonNext>    
 
     <Results v-show="results" :cards="cardDeck" @next-stage="nextStage" />
@@ -81,19 +82,19 @@ export default {
       if (val == this.cardDeck.length) {
         if (this.deckRound == 1) {
           this.shuffleDeck(this.roundOneImportant);
-          if (this.roundOneImportant.length < 15) {
+          if (this.roundOneImportant.length < 5) {
             this.gameEnded = true;
           }
         }
         if (this.deckRound == 2) {
           this.shuffleDeck(this.roundTwoImportant);
-          if (this.roundTwoImportant.length < 15) {
+          if (this.roundTwoImportant.length < 5) {
             this.gameEnded = true;
           }
         }
         if (this.deckRound == 3) {
           this.shuffleDeck(this.roundThreeImportant);
-          if (this.roundThreeImportant.length < 15) {
+          if (this.roundThreeImportant.length < 5) {
             this.gameEnded = true;
           }
         }
@@ -101,6 +102,9 @@ export default {
     }
   },
   computed: {
+    oneCard() {
+        return this.cardDeck[this.cardsViewed];
+    },
     cardDeck() {
       if (this.deckRound == 1) {
         return this.cards;

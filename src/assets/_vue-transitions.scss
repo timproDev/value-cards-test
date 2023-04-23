@@ -26,3 +26,38 @@
     transform: translateY(0);
   }
 }
+
+
+.sli-leave-active {
+  animation: slide-left-out;
+  animation-duration: .25s;
+  animation-timing-function: ease-in-out;
+}
+
+.sli-enter-active {
+  animation: slide-left-in;
+  animation-duration: 260ms;
+}
+
+
+@keyframes slide-left-in {
+  0% {
+    opacity: 0;
+    transform: translateX(12vw) rotate(9deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+@keyframes slide-left-out {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-12vw, 32px) rotate(-12deg);
+  }
+}
