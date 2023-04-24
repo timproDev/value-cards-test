@@ -12,13 +12,13 @@
         <span>{{ cardsRemaining }}</span>
         cards remaining
       </p>
-      <!-- <p>You have <span>{{ cardDeck.length }}</span> values</p> -->
+
     </div>
 
-    <!-- <Cards v-show="cardsViewed < cardDeck.length && !results" :cards="oneCard" :cardsViewed="cardsViewed" /> -->
-    <div v-show="!deckComplete" class="cards-wrapper">
-      <Cards :cards="oneCard" :cardsViewed="cardsViewed" />
+    <div v-show="!deckComplete" class="cards-wrapper">      
+        <Card :cards="oneCard" :cardsViewed="cardsViewed" ref="childComp" />
     </div>
+
     <Controls v-show="!deckComplete" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant"
       @card-passed="cardPassed" />
 
@@ -26,12 +26,11 @@
 
     <Results v-show="results" :cards="cardDeck" @next-stage="nextStage" />
 
-
   </div>
 </template>
 <script>
-import { ref } from 'vue';
-import Cards from '../components/Cards.vue';
+
+import Card from '../components/Card.vue';
 import Controls from '../components/Controls.vue';
 import ButtonNext from '../components/ButtonNext.vue';
 import Results from '../components/Results.vue';
@@ -59,7 +58,7 @@ export default {
     }
   },
   components: {
-    Cards,
+    Card,
     ButtonNext,
     Controls,
     Results
@@ -71,6 +70,9 @@ export default {
       }
     },
     cardsViewed(val) {
+      console.log('this.cardDeck', this.cardDeck);
+      console.log('this.roundOneImportant', this.roundOneImportant);
+      console.log('cards viwed', this.cardsViewed);
       // end the end of each deck,
       // shuffle them for the next round
       // and check if the game is over
@@ -78,39 +80,44 @@ export default {
         // if, deck is done change state of deckComplete to true
         // remove last card from dom ************************************************************************************ - then comlete = true
         // get child card by key or ref amd remove from donw, this should active css transition, when finished, next expression fires - setTimeout?
+        // console.log(this.$refs.childComp, "i think we done")
         this.deckComplete = true;
         // reset the deck
         this.cardsViewed = 0;
+        
+        // if on next round
         if (this.deckRound == 1) {
-          this.shuffleDeck(this.roundOneImportant);
-          if (this.roundOneImportant.length < 10) {
-            this.gameEnded = true;
-          }
+          // if (this.roundOneImportant.length < 10) {
+          //   this.gameEnded = true;
+          // }
         }
         if (this.deckRound == 2) {
           this.shuffleDeck(this.roundTwoImportant);
-          if (this.roundTwoImportant.length < 10) {
-            this.gameEnded = true;
-          }
+          // if (this.roundTwoImportant.length < 10) {
+          //   this.gameEnded = true;
+          // }
         }
         if (this.deckRound == 3) {
           this.shuffleDeck(this.roundThreeImportant);
-          if (this.roundThreeImportant.length < 10) {
-            this.gameEnded = true;
-          }
+          // if (this.roundThreeImportant.length < 10) {
+          //   this.gameEnded = true;
+          // }
         }
       }
     }
   },
   computed: {
     oneCard() {
-      return this.cards[this.cardsViewed];
+      // if this.cardsViewed == this.cardDeck.length {
+
+      // }
+      return this.cardDeck[this.cardsViewed];
     },
     cardDeck() {
       if (this.deckRound == 1) {
         return this.cards;
       } else if (this.deckRound == 2) {
-        return this.roundOneImportant;
+        return this.emptyDeck;
       } else if (this.deckRound == 3) {
         return this.roundTwoImportant;
       }
