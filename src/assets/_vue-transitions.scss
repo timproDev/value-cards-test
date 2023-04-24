@@ -30,20 +30,20 @@
 
 .sli-leave-active {
   animation: slide-left-out;
-  animation-duration: .25s;
+  animation-duration: 200ms;
   animation-timing-function: ease-in-out;
 }
 
 .sli-enter-active {
   animation: slide-left-in;
-  animation-duration: 260ms;
+  animation-duration: 140ms;
 }
 
 
 @keyframes slide-left-in {
   0% {
     opacity: 0;
-    transform: translateX(12vw) rotate(9deg);
+    transform: translateX(6vw) rotate(6deg);
   }
   100% {
     opacity: 1;
@@ -58,6 +58,6 @@
   }
   100% {
     opacity: 0;
-    transform: translate(-12vw, 32px) rotate(-12deg);
+    transform: translate(-6vw, 16px) rotate(-6deg);
   }
 }

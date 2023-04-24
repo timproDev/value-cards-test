@@ -2,7 +2,7 @@
   <div class="round-wrapper">
 
     <div class="title">
-      <h2>Round {{ deckRound }}</h2>
+      <h2>Round Title</h2>
       <button
         type="button" 
             class="btn btn--back"
@@ -15,7 +15,7 @@
         >Restart</button>
     </div>
 
-    <div v-show="cardsViewed < cardDeck.length">
+    <div v-show="!deckComplete">
       <p class="number">
         <span>{{ cardsRemaining }}</span>
         cards remaining
@@ -23,13 +23,14 @@
       <!-- <p>You have <span>{{ cardDeck.length }}</span> values</p> -->
     </div>
 
-    <Cards v-show="cardsViewed < cardDeck.length && !results" :cards="oneCard" :cardsViewed="cardsViewed" />
+    <!-- <Cards v-show="cardsViewed < cardDeck.length && !results" :cards="oneCard" :cardsViewed="cardsViewed" /> -->
 
+    <Cards v-show="!deckComplete" :cards="cardDeck" :cardsViewed="cardsViewed" ref="childRef" />
     
-    <Controls v-show="cardsViewed < cardDeck.length && !results" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant"
+    <Controls v-show="!deckComplete" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant"
       @card-passed="cardPassed" />
     
-    <ButtonNext v-show="cardsViewed == cardDeck.length && !results" @go-to-next="goToNext">{{ buttonMessage }}</ButtonNext>    
+    <ButtonNext v-show="deckComplete" @go-to-next="goToNext">{{ buttonMessage }}</ButtonNext>    
 
     <Results v-show="results" :cards="cardDeck" @next-stage="nextStage" />
     
@@ -37,6 +38,7 @@
   </div>
 </template>
 <script>
+import { ref } from 'vue';
 import Cards from '../components/Cards.vue';
 import Controls from '../components/Controls.vue';
 import ButtonNext from '../components/ButtonNext.vue';
@@ -53,10 +55,12 @@ export default {
   ],
   data() {
     return {
+      childRef: ref(null),
       gameEnded: false,
       results: false,
       cardsViewed: 0,
       deckRound: 1,
+      deckComplete: false,
       buttonMessage: 'Go to next',
       roundOneImportant: [],
       roundTwoImportant: [],
@@ -76,25 +80,38 @@ export default {
       }
     },
     cardsViewed(val) {
+      console.log(this.childRef);
+      // if (val == (this.cards.length - 1)) {
+      //     console.log('last card it', this.$refs)
+      // }
+      // if (val == (this.cards.length)) {
+      //     console.log('last card it', this.$refs)
+      // }
       // end the end of each deck,
       // shuffle them for the next round
       // and check if the game is over
       if (val == this.cardDeck.length) {
+        // if, deck is done change state of deckComplete to true
+        // remove last card from dom ************************************************************************************ - then comlete = true
+        // get child card by key or ref amd remove from donw, this should active css transition, when finished, next expression fires - setTimeout?
+        this.deckComplete = true;
+        // reset the deck
+        this.cardsViewed = 0;
         if (this.deckRound == 1) {
           this.shuffleDeck(this.roundOneImportant);
-          if (this.roundOneImportant.length < 5) {
+          if (this.roundOneImportant.length < 10) {
             this.gameEnded = true;
           }
         }
         if (this.deckRound == 2) {
           this.shuffleDeck(this.roundTwoImportant);
-          if (this.roundTwoImportant.length < 5) {
+          if (this.roundTwoImportant.length < 10) {
             this.gameEnded = true;
           }
         }
         if (this.deckRound == 3) {
           this.shuffleDeck(this.roundThreeImportant);
-          if (this.roundThreeImportant.length < 5) {
+          if (this.roundThreeImportant.length < 10) {
             this.gameEnded = true;
           }
         }
@@ -102,9 +119,6 @@ export default {
     }
   },
   computed: {
-    oneCard() {
-        return this.cardDeck[this.cardsViewed];
-    },
     cardDeck() {
       if (this.deckRound == 1) {
         return this.cards;
@@ -141,7 +155,7 @@ export default {
       }
       this.cardsViewed++;
     },
-    isNotImportant() {
+    isNotImportant() { 
       this.cardsViewed++;
     },
     cardPassed() {
@@ -164,9 +178,8 @@ export default {
         console.log('game over homie')
         return
       }
-      this.cardsViewed = 0;
-      this.deckRound++;      
-      // if the game is over, show results && update the button text && set the round to 0
+      this.deckRound++;
+      this.deckComplete = false;
     },
     nextStage() {
         this.$emit('next-stage')
