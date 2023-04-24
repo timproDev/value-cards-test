@@ -3,16 +3,8 @@
 
     <div class="title">
       <h2>Round Title</h2>
-      <button
-        type="button" 
-            class="btn btn--back"
-            @click.prevent="goBack"
-        >Back</button>
-      <button
-        type="button" 
-            class="btn btn--reset"
-            @click.prevent="resetDeck"
-        >Restart</button>
+      <button type="button" class="btn btn--back" @click.prevent="goBack">Back</button>
+      <button type="button" class="btn btn--reset" @click.prevent="resetDeck">Restart</button>
     </div>
 
     <div v-show="!deckComplete">
@@ -24,17 +16,17 @@
     </div>
 
     <!-- <Cards v-show="cardsViewed < cardDeck.length && !results" :cards="oneCard" :cardsViewed="cardsViewed" /> -->
-
-    <Cards v-show="!deckComplete" :cards="cardDeck" :cardsViewed="cardsViewed" ref="childRef" />
-    
+    <div v-show="!deckComplete" class="cards-wrapper">
+      <Cards :cards="oneCard" :cardsViewed="cardsViewed" />
+    </div>
     <Controls v-show="!deckComplete" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant"
       @card-passed="cardPassed" />
-    
-    <ButtonNext v-show="deckComplete" @go-to-next="goToNext">{{ buttonMessage }}</ButtonNext>    
+
+    <ButtonNext v-show="deckComplete" @go-to-next="goToNext">{{ buttonMessage }}</ButtonNext>
 
     <Results v-show="results" :cards="cardDeck" @next-stage="nextStage" />
-    
-    
+
+
   </div>
 </template>
 <script>
@@ -55,7 +47,6 @@ export default {
   ],
   data() {
     return {
-      childRef: ref(null),
       gameEnded: false,
       results: false,
       cardsViewed: 0,
@@ -80,13 +71,6 @@ export default {
       }
     },
     cardsViewed(val) {
-      console.log(this.childRef);
-      // if (val == (this.cards.length - 1)) {
-      //     console.log('last card it', this.$refs)
-      // }
-      // if (val == (this.cards.length)) {
-      //     console.log('last card it', this.$refs)
-      // }
       // end the end of each deck,
       // shuffle them for the next round
       // and check if the game is over
@@ -119,6 +103,9 @@ export default {
     }
   },
   computed: {
+    oneCard() {
+      return this.cards[this.cardsViewed];
+    },
     cardDeck() {
       if (this.deckRound == 1) {
         return this.cards;
@@ -155,7 +142,7 @@ export default {
       }
       this.cardsViewed++;
     },
-    isNotImportant() { 
+    isNotImportant() {
       this.cardsViewed++;
     },
     cardPassed() {
@@ -182,7 +169,7 @@ export default {
       this.deckComplete = false;
     },
     nextStage() {
-        this.$emit('next-stage')
+      this.$emit('next-stage')
     }
   }
 }
