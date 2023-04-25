@@ -86,6 +86,7 @@ export default {
           this.showNextBtn = true;
         }, 500);
         if (this.deckRound == 1) {
+          this.shuffleDeck(this.roundOneImportant);
           if (this.roundOneImportant.length < this.enoughCards) {
             this.gameEnded = true;
           }
