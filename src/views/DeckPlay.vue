@@ -15,22 +15,26 @@
         >Restart</button>
     </div>
 
-    <div v-show="cardsViewed < cardDeck.length">
+    
+    <div v-show="roundActive">
+
       <p class="number">
         <span>{{ cardsRemaining }}</span>
         cards remaining
       </p>
-      <!-- <p>You have <span>{{ cardDeck.length }}</span> values</p> -->
+    
+      <Cards :deckComplete="deckComplete" :cards="oneCard" :cardsViewed="cardsViewed" />
+    
+      <Controls :deckComplete="deckComplete" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant"
+        @card-passed="cardPassed" />
+        
     </div>
-
-    <Cards v-show="cardsViewed < cardDeck.length && !results" :cards="oneCard" :cardsViewed="cardsViewed" />
-
     
-    <Controls v-show="cardsViewed < cardDeck.length && !results" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant"
-      @card-passed="cardPassed" />
     
-    <ButtonNext v-show="cardsViewed == cardDeck.length && !results" @go-to-next="goToNext">{{ buttonMessage }}</ButtonNext>    
-
+    <Transition name="apple">
+      <ButtonNext v-show="showNextBtn" @go-to-next="goToNext">{{ buttonMessage }}</ButtonNext>
+    </Transition>
+    
     <Results v-show="results" :cards="cardDeck" @next-stage="nextStage" />
     
     
@@ -54,9 +58,12 @@ export default {
   data() {
     return {
       gameEnded: false,
-      results: false,
+      roundActive: false,
+      deckComplete: true,
       cardsViewed: 0,
       deckRound: 1,
+      showNextBtn: false,
+      results: false,
       buttonMessage: 'Go to next',
       roundOneImportant: [],
       roundTwoImportant: [],
@@ -79,27 +86,37 @@ export default {
       // end the end of each deck,
       // shuffle them for the next round
       // and check if the game is over
+      console.log('deck complete:', this.deckComplete)
       if (val == this.cardDeck.length) {
-        if (this.deckRound == 1) {
-          this.shuffleDeck(this.roundOneImportant);
-          if (this.roundOneImportant.length < 5) {
-            this.gameEnded = true;
-          }
+        // hide deck ref deck and hide
+        this.deckComplete = true;
+        this.cardsViewed = 0;
+        setTimeout(() => {
+          this.showNextBtn = true;
+        }, 500);
+        if (this.deckRound == 1) { // if round 1 deck is done          
+          // if (this.roundOneImportant.length < 5) {
+          //   this.gameEnded = true;
+          // }
         }
         if (this.deckRound == 2) {
           this.shuffleDeck(this.roundTwoImportant);
-          if (this.roundTwoImportant.length < 5) {
-            this.gameEnded = true;
-          }
+          // if (this.roundTwoImportant.length < 5) {
+          //   this.gameEnded = true;
+          // }
         }
         if (this.deckRound == 3) {
           this.shuffleDeck(this.roundThreeImportant);
-          if (this.roundThreeImportant.length < 5) {
-            this.gameEnded = true;
-          }
+          // if (this.roundThreeImportant.length < 5) {
+          //   this.gameEnded = true;
+          // }
         }
       }
     }
+  },
+  mounted() {
+    this.deckComplete = false;
+    this.roundActive = true;
   },
   computed: {
     oneCard() {
@@ -132,6 +149,7 @@ export default {
       this.roundThreeImportant = [];
     },
     isImportant() {
+      console.log(this.cards)
       if (this.deckRound == 1) {
         this.roundOneImportant.push(this.cardDeck[this.cardsViewed]);
       } else if (this.deckRound == 2) {
@@ -165,7 +183,12 @@ export default {
         return
       }
       this.cardsViewed = 0;
-      this.deckRound++;      
+      this.deckRound++;
+      // roundActive: false,
+      // deckComplete: true,
+      // cardsViewed: 0,
+      // deckRound: 1,
+      // showNextBtn: false,
       // if the game is over, show results && update the button text && set the round to 0
     },
     nextStage() {

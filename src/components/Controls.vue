@@ -1,5 +1,5 @@
 <template>
-    <div class="controls-wrapper">
+    <div class="controls-wrapper" v-show="!deckComplete">
         <!-- Section heading for control buttons -->
         <h4>How important?</h4>
         
@@ -32,7 +32,8 @@
 export default {
     // Receive props from parent component
     props: [
-        'deckRound'
+        'deckRound',
+        'deckComplete'
     ],
     // Emit events to parent component
     emits: [

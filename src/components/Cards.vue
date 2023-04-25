@@ -1,7 +1,7 @@
 <template>
         <div class="cards-wrapper">
             <Transition mode="out-in" name="sli">
-                <div class="card" :key="cardsViewed">
+                <div v-if="!deckComplete" class="card" :key="cards.word">
                     <h3>{{ cards.word }}</h3>
                 </div>
             </Transition>
@@ -12,7 +12,8 @@
 export default {
     props: [
         "cards",
-        "cardsViewed"
+        "cardsViewed",
+        "deckComplete"
     ]    
 }
 </script>
