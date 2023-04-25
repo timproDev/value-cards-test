@@ -1,43 +1,40 @@
 <template>
-  <div class="round-wrapper">
+  <div class="round-wrapper" :class="roundStyle">
 
     <div class="title">
       <h2>Round {{ deckRound }}</h2>
-      <button
-        type="button" 
-            class="btn btn--back"
-            @click.prevent="goBack"
-        >Back</button>
-      <button
-        type="button" 
-            class="btn btn--reset"
-            @click.prevent="resetDeck"
-        >Restart</button>
+      <button type="button" class="btn btn--back" @click.prevent="goBack">Back</button>
+      <button type="button" class="btn btn--reset" @click.prevent="resetDeck">Restart</button>
     </div>
 
-    
-    <div v-show="roundActive">
+    <Transition>
 
-      <p class="number">
-        <span>{{ cardsRemaining }}</span>
-        cards remaining
-      </p>
-    
-      <Cards :deckComplete="deckComplete" :cards="oneCard" :cardsViewed="cardsViewed" />
-    
-      <Controls :deckComplete="deckComplete" :deckRound="deckRound" @is-not-important="isNotImportant" @is-important="isImportant"
-        @card-passed="cardPassed" />
-        
-    </div>
-    
-    
-    <Transition name="apple">
-      <ButtonNext v-show="showNextBtn" @go-to-next="goToNext">{{ buttonMessage }}</ButtonNext>
+      <div v-show="!deckComplete">
+
+        <p class="number">
+          <span>{{ cardsRemaining }}</span>
+          cards remaining
+        </p>
+
+        <Cards :deckComplete="deckComplete" :cards="oneCard" :cardsViewed="cardsViewed" />
+
+        <Controls :deckComplete="deckComplete" :deckRound="deckRound" @is-not-important="isNotImportant"
+          @is-important="isImportant" @card-passed="cardPassed" />
+
+      </div>
+
     </Transition>
-    
-    <Results v-show="results" :cards="cardDeck" @next-stage="nextStage" />
-    
-    
+
+
+    <Transition name="apple">
+      <ButtonNext v-show="showNextBtn && !results" @go-to-next="goToNext">{{ buttonMessage }}</ButtonNext>
+    </Transition>
+
+    <Transition name="apple">
+      <Results v-show="results" :cards="cardDeck" @next-stage="nextStage" />
+    </Transition>
+
+
   </div>
 </template>
 <script>
@@ -57,8 +54,8 @@ export default {
   ],
   data() {
     return {
+      enoughCards: 5, // 4 is snough
       gameEnded: false,
-      roundActive: false,
       deckComplete: true,
       cardsViewed: 0,
       deckRound: 1,
@@ -83,44 +80,37 @@ export default {
       }
     },
     cardsViewed(val) {
-      // end the end of each deck,
-      // shuffle them for the next round
-      // and check if the game is over
-      console.log('deck complete:', this.deckComplete)
       if (val == this.cardDeck.length) {
-        // hide deck ref deck and hide
         this.deckComplete = true;
-        this.cardsViewed = 0;
         setTimeout(() => {
           this.showNextBtn = true;
         }, 500);
-        if (this.deckRound == 1) { // if round 1 deck is done          
-          // if (this.roundOneImportant.length < 5) {
-          //   this.gameEnded = true;
-          // }
+        if (this.deckRound == 1) {
+          if (this.roundOneImportant.length < this.enoughCards) {
+            this.gameEnded = true;
+          }
         }
         if (this.deckRound == 2) {
           this.shuffleDeck(this.roundTwoImportant);
-          // if (this.roundTwoImportant.length < 5) {
-          //   this.gameEnded = true;
-          // }
+          if (this.roundTwoImportant.length < this.enoughCards) {
+            this.gameEnded = true;
+          }
         }
         if (this.deckRound == 3) {
           this.shuffleDeck(this.roundThreeImportant);
-          // if (this.roundThreeImportant.length < 5) {
-          //   this.gameEnded = true;
-          // }
+          if (this.roundThreeImportant.length < this.enoughCards) {
+            this.gameEnded = true;
+          }
         }
       }
     }
   },
   mounted() {
     this.deckComplete = false;
-    this.roundActive = true;
   },
   computed: {
     oneCard() {
-        return this.cardDeck[this.cardsViewed];
+      return this.cardDeck[this.cardsViewed];
     },
     cardDeck() {
       if (this.deckRound == 1) {
@@ -133,23 +123,36 @@ export default {
     },
     cardsRemaining() {
       return this.cardDeck.length - this.cardsViewed;
-    }
+    },
+    roundStyle() {
+      if (this.deckRound == 1) {
+        return 'round-style-1';
+      } else if (this.deckRound == 2) {
+        return 'round-style-2';
+      } else if (this.deckRound == 3) {
+        return 'round-style-3';
+      }
+    },
   },
   methods: {
     goBack() {
       this.$emit('go-back');
     },
     resetDeck() {
-      this.cardsViewed = 0;
-      this.gameEnded = false;
-      this.results = false;
-      this.deckRound = 1;
-      this.roundOneImportant = [];
-      this.roundTwoImportant = [];
-      this.roundThreeImportant = [];
+      this.deckComplete = true;
+      setTimeout(() => {
+        this.deckComplete = false;
+        this.cardsViewed = 0;
+        this.showNextBtn = false;
+        this.gameEnded = false;
+        this.results = false;
+        this.deckRound = 1;
+        this.roundOneImportant = [];
+        this.roundTwoImportant = [];
+        this.roundThreeImportant = [];
+      }, 700)
     },
     isImportant() {
-      console.log(this.cards)
       if (this.deckRound == 1) {
         this.roundOneImportant.push(this.cardDeck[this.cardsViewed]);
       } else if (this.deckRound == 2) {
@@ -179,20 +182,18 @@ export default {
     goToNext() {
       if (this.gameEnded) {
         this.results = true;
-        console.log('game over homie')
         return
       }
-      this.cardsViewed = 0;
-      this.deckRound++;
-      // roundActive: false,
-      // deckComplete: true,
-      // cardsViewed: 0,
-      // deckRound: 1,
-      // showNextBtn: false,
-      // if the game is over, show results && update the button text && set the round to 0
+      this.showNextBtn = false;
+      // let button fade away then reset
+      setTimeout(() => {
+        this.deckComplete = false;
+        this.cardsViewed = 0;
+        this.deckRound++;
+      }, 300);
     },
     nextStage() {
-        this.$emit('next-stage')
+      this.$emit('next-stage')
     }
   }
 }
