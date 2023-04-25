@@ -31,7 +31,7 @@
     </Transition>
 
     <Transition name="apple">
-      <Results v-show="results" :cards="cardDeck" @next-stage="nextStage" />
+      <Results v-show="results" :cards="resultsDeck" @next-stage="nextStage" />
     </Transition>
 
 
@@ -111,6 +111,15 @@ export default {
   computed: {
     oneCard() {
       return this.cardDeck[this.cardsViewed];
+    },
+    resultsDeck() {
+      if (this.deckRound == 1) {
+        return this.roundOneImportant;
+      } else if (this.deckRound == 2) {
+        return this.roundTwoImportant;
+      } else if (this.deckRound == 3) {
+        return this.roundThreeImportant;
+      }
     },
     cardDeck() {
       if (this.deckRound == 1) {
