@@ -3,7 +3,7 @@
 
     <div class="title">
       <h2>Round {{ deckRound }}</h2>
-      <button type="button" class="btn btn--back" @click.prevent="goBack">Back</button>
+      <button type="button" class="btn btn--back" @click.prevent="goBack">Home</button>
       <button type="button" class="btn btn--reset" @click.prevent="resetDeck">Restart</button>
     </div>
 
@@ -54,7 +54,7 @@ export default {
   ],
   data() {
     return {
-      enoughCards: 5, // 4 is snough
+      enoughCards: 15, // 14 is snough
       gameEnded: false,
       deckComplete: true,
       cardsViewed: 0,
