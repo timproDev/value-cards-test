@@ -30,34 +30,31 @@
 
 .sli-leave-active {
   animation: slide-left-out;
-  animation-duration: .25s;
-  animation-timing-function: ease-in-out;
+  animation-duration: 417ms;
+  animation-timing-function: cubic-bezier(.65,-.15,.97,.43);
 }
 
 .sli-enter-active {
   animation: slide-left-in;
-  animation-duration: 260ms;
+  animation-duration: 361ms;
+  animation-timing-function: cubic-bezier(.09,.96,.37,1);
 }
 
 
 @keyframes slide-left-in {
   0% {
-    opacity: 0;
-    transform: translateX(12vw) rotate(9deg);
+    transform: translateY(30vh) rotate(18deg) scale(.9);
   }
   100% {
-    opacity: 1;
-    transform: translateX(0) rotate(0deg);
+    transform: translateY(0) rotate(0deg) scale(1);
   }
 }
 
 @keyframes slide-left-out {
   0% {
-    opacity: 1;
-    transform: translate(0, 0) rotate(0deg);
+    transform: translateY(0) rotate(0deg) scale(1);
   }
   100% {
-    opacity: 0;
-    transform: translate(-12vw, 32px) rotate(-12deg);
+    transform: translateY(40vh) rotate(-22deg) scale(.9);
   }
 }

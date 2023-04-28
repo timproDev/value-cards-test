@@ -9,14 +9,17 @@
   --color-primary: #00A792;
   --color-primary-light: #00D0B7;
   --gradient-option-1: linear-gradient(0deg, rgba(214,214,214,1) 0%, rgba(255,255,255,1) 100%);
+  --gradient-option-2: linear-gradient(0deg, rgb(161 147 134) 0%, rgba(255,255,255,1) 100%);
 }
 
-body {
-  font-family: 'Poppins', sans-serif;
+body {  
+  font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   height: 100vh;
-  background: rgb(214,214,214);
-  background: var(--gradient-option-1);
+  background: #dfddd1;  /* fallback for old browsers */
+// background: -webkit-linear-gradient(to top, #E29587, #b29ea0);  /* Chrome 10-25, Safari 5.1-6 */
+// background: linear-gradient(to top, #E29587, #b29ea0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   overflow: hidden;
 }
 
@@ -56,18 +59,14 @@ span {
 .cnt-block {
   $this: &;
 
-  &--home-header {
+  &--home-header {    
     text-align: center;
-    border-bottom: 2px dashed #eeeeee;
     padding: .75rem 0;
     color: #313131;
     display: flex;
     flex-direction: column;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
     margin: 0 auto;
+    display: none;
     h1 {
       margin: 0;
       font-size: 1.25rem;
@@ -82,8 +81,8 @@ span {
 
   &--home-hero {
     text-align: center;
-    padding: 2rem;
-    height: 100%;
+    padding: 0;
+    height: 75%;
     display: flex;
     flex-direction: column;
     justify-content:center;
@@ -120,7 +119,11 @@ span {
 }
 
 .title {
-  padding: 80px 0 40px 0;
+  padding: 2vh 0;
+  @include mq('tablet') {
+    padding: 4vh 0;
+  }
+  text-align: center;
   h2 {
     margin: 0;
     font-size: 18px;
@@ -128,6 +131,7 @@ span {
     text-align: center;
     text-transform: uppercase;
     color: var(--color-primary);
+    line-height: 18px;
   }
 }
 
@@ -135,7 +139,6 @@ span {
   padding-top: 0;
   text-align: center;
   line-height: 26px;
-  color: #616161;
 
   span {
     display: inline-block;
@@ -161,11 +164,11 @@ span {
 .round-style-1 {}
 
 .round-style-2 {
-  --color-primary: #4ba2ff;
-  --color-primary-light: #c4e0ff;
+  --color-primary: #7f06ea;
+  --color-primary-light: #9572b3;
 }
 
 .round-style-3 {
-  --color-primary: #fa72ea;
+  --color-primary: #bf07aa;
   --color-primary-light: #ffddfb;
 }
