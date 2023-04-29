@@ -10,15 +10,17 @@
   --color-primary-light: #00D0B7;
   --gradient-option-1: linear-gradient(0deg, rgba(214,214,214,1) 0%, rgba(255,255,255,1) 100%);
   --gradient-option-2: linear-gradient(0deg, rgb(161 147 134) 0%, rgba(255,255,255,1) 100%);
+  --color-secondary-200: #dfddd1;
+  --color-secondary-100: #f5f4ec;
+  --color-secondary-50: #eae8d4; 
+  --color-blue-200: #8298a9;
 }
 
 body {  
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
   height: 100vh;
-  background: #dfddd1;  /* fallback for old browsers */
-// background: -webkit-linear-gradient(to top, #E29587, #b29ea0);  /* Chrome 10-25, Safari 5.1-6 */
-// background: linear-gradient(to top, #E29587, #b29ea0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: var(--color-secondary-200);
 
   overflow: hidden;
 }
@@ -26,7 +28,7 @@ body {
 #app {
   height: 100%;
   @include mq('tablet') {
-    max-width: 580px;
+    max-width: 780px;
     margin: 0 auto;
     height: 800px;
   }

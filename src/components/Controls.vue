@@ -2,29 +2,59 @@
     <div class="controls-wrapper" v-show="!deckComplete">
         <!-- Section heading for control buttons -->
         <h4>How important?</h4>
-        
+
         <!-- Control buttons for first round -->
         <div class="controls" v-if="deckRound == 1">
-            <button type="button" class="btn btn--remove" @click.prevent=isNotImportant>Not important</button>
-            <button type="button" class="btn btn--add" @click.prevent=isImportant>Important</button>
-            <button type="button" class="btn btn--pass" @click.prevent=passCard>Pass</button>
+            <div class="btn-group">
+                <button type="button" class="btn btn--remove" @click.prevent=isNotImportant></button>
+                <label>Not important</label>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn--add" @click.prevent=isImportant></button>
+                <label>Important</label>
+            </div>
+            <div class="btn-group btn-group--pass">
+                <button type="button" class="btn btn--pass" @click.prevent=passCard></button>
+                <label>Pass</label>
+            </div>
         </div>
-        
+
         <!-- Control buttons for second round -->
         <div class="controls" v-else-if="deckRound == 2">
-            <button type="button" class="btn btn--remove" @click.prevent=isNotImportant>Little</button>
-            <button type="button" class="btn btn--remove" @click.prevent=isNotImportant>Somewhat</button>
-            <button type="button" class="btn btn--add" @click.prevent=isImportant>Very</button>
-            <button type="button" class="btn btn--pass" @click.prevent=passCard>Pass</button>
+            <div class="btn-group">
+                <button type="button" class="btn btn--remove" @click.prevent=isNotImportant></button>
+                <label>Little</label>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn--remove" @click.prevent=isNotImportant></button>
+                <label>Somewhat</label>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn--add" @click.prevent=isImportant></button>
+                <label>Very</label>
+            </div>
+            <div class="btn-group btn-group--pass">
+                <button type="button" class="btn btn--pass" @click.prevent=passCard></button>
+                <label>Pass</label>
+            </div>
         </div>
-        
+
         <!-- Control buttons for third round -->
         <div class="controls" v-else-if="deckRound == 3">
-            <button type="button" class="btn btn--remove" @click.prevent=isNotImportant>Moderately</button>
-            <button type="button" class="btn btn--add" @click.prevent=isImportant>Super</button>
-            <button type="button" class="btn btn--pass" @click.prevent=passCard>Pass</button>
+            <div class="btn-group">
+                <button type="button" class="btn btn--remove" @click.prevent=isNotImportant></button>
+                <label>Moderately</label>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn--add" @click.prevent=isImportant></button>
+                <label>Super</label>
+            </div>
+            <div class="btn-group btn-group--pass">
+                <button type="button" class="btn btn--pass" @click.prevent=passCard></button>
+                <label>Pass</label>
+            </div>
         </div>
-    </div>    
+    </div>
 </template>
 
 <script>

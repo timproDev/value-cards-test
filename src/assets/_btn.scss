@@ -1,3 +1,43 @@
+.controls-wrapper {
+  padding: 2rem;
+  text-align: center;
+  h4 {
+      font-size: 24px;
+  }
+  @include mq('tablet') {
+    position: relative;
+  }
+}
+
+.controls {
+  display: flex;
+  flex-direction: row;
+  column-gap: 16px;
+  padding: 6vh 2rem 4rem 2rem;
+  justify-content:center;
+}
+
+
+.btn-group {
+  position: relative;
+  label {
+    position: absolute;
+    top: -6vh;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    height: 64px;
+    display: table-cell;
+    vertical-align: bottom;
+  }
+  &.btn-group--pass {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+  }
+}
 .btn {
   position: relative;
   display: inline-flex;
